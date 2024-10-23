@@ -25,7 +25,7 @@ const Information = sequelize.define('Information', {
         type: DataTypes.INTEGER,
         references: {
             model: 'Account',
-            key: 'Id'
+            key: 'id'
         }
     } 
 })
