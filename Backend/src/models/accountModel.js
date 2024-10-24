@@ -1,5 +1,5 @@
-const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../config/conectionDB');
+const { DataTypes, Model } = require('sequelize')
+const sequelize = require('../config/conectionDB')
 const Account = sequelize.define('Account', {
     id: {
         type: DataTypes.INTEGER,
@@ -10,7 +10,10 @@ const Account = sequelize.define('Account', {
         type: DataTypes.STRING
     },
     password: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
     },
-});
-module.exports = Account;
+    role: {
+        type: DataTypes.STRING
+    }
+})
+module.exports = Account

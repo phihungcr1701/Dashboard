@@ -12,5 +12,3 @@ Information.belongsTo(Account, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
-
-module.exports = { Account, Information };

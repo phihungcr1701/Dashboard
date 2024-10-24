@@ -14,7 +14,8 @@ let addAccount = async (data) => {
     try {
         let newAccount = await db.Account.create({
             email: data.email,
-            password: data.password
+            password: data.password,
+            role: data.role
         });
         return newAccount;
     } catch (error) {
@@ -22,6 +23,7 @@ let addAccount = async (data) => {
         throw error;
     }
 }
+
 module.exports = {
     getAccount: getAccount,
     addAccount: addAccount

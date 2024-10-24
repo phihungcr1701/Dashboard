@@ -22,11 +22,7 @@ const Information = sequelize.define('Information', {
         type: DataTypes.STRING
     },
     accountId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: 'Account',
-            key: 'id'
-        }
+        type: DataTypes.INTEGER
     } 
 })
 
