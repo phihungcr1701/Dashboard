@@ -1,22 +1,24 @@
-document.getElementById('inputLogin').addEventListener('click', event => {
+document.getElementById('inputLogin').addEventListener('click', async () => {
+
     const email = document.getElementById('inputEmail').value
     const password = document.getElementById('inputPassword').value
-    fetch('http://localhost:3000/api/getUser', {
-        method: 'GET', 
-        headers: {
-        'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify()
+
+    axios.get('http://localhost:3000/api/getUser', {})
+    .then (response => {
+        const data = response.data.data
+        console.log(data)
+        let kt = false
+        data.forEach(item => {
+            if (item.email == email && item.password == password){
+                kt = true
+                if (item.role == 'admin')
+                    window.location.href = './index.html'
+                else
+                    window.location.href = './user.html'
+            }
+        })
     })
-    .then(response => response.json())
-    .then(data => {
-        const account = data.data.find(item => item.email === email)
-        if (account && account.password === password)
-            alert("Đăng nhập thành công", account.role)
-        else 
-            alert("Đăng nhập thất bại")
+    .catch (error => {
+        console.log(error)
     })
-    .catch(error => {
-        console.error('Có lỗi xảy ra:', error)
-    });
 })
