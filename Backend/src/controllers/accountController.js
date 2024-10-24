@@ -1,5 +1,19 @@
 const accountServices = require('../services/accountService');
 
+let getInFromAc = async (req, res) => {
+    try {
+        let result = await accountServices.getInFromAc(req.body);
+        res.status(200).json({
+            mess: "Information của Account",
+            data: result
+        });
+    } catch (error) {
+        res.status(500).json({
+            err: error
+        });
+    }
+}
+
 let getAccount = async (req, res) => {
     try {
         let result = await accountServices.getAccount();
@@ -37,5 +51,6 @@ module.exports = {
     getAccount: getAccount,
     addAccount: addAccount,
     editAccount: editAccount,
-    delAccount: delAccount
+    delAccount: delAccount,
+    getInFromAc: getInFromAc
 }

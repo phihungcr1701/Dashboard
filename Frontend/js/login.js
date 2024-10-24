@@ -6,7 +6,6 @@ document.getElementById('inputLogin').addEventListener('click', async () => {
     axios.get('http://localhost:3000/api/getUser', {})
     .then (response => {
         const data = response.data.data
-        console.log(data)
         let kt = false
         data.forEach(item => {
             if (item.email == email && item.password == password){
