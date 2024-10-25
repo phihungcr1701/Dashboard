@@ -14,11 +14,11 @@ let getInformation = async (req, res) => {
     }
 }
 
-let addInformation = async (req, res) => {
+let editInformation = async (req, res) => {
     try {
-        let result = await informationServices.addInformation(req.body);
+        let result = await informationServices.editInformation(req.body);
         res.status(200).json({
-            mess: "Đã thêm thành công",
+            mess: "Đã cập nhập thành công",
             data: result
         });
     } catch (error) {
@@ -27,15 +27,8 @@ let addInformation = async (req, res) => {
         });
     }
 }
-let editInformation = (req, res) => {
-    res.send("edit Information");
-}
-let delInformation = (req, res) => {
-    res.send("del Information");
-}
+
 module.exports = {
-    getInformation: getInformation,
-    addInformation: addInformation,
-    editInformation: editInformation,
-    delInformation: delInformation
+    getInformation,
+    editInformation
 }

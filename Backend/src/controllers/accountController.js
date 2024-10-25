@@ -1,19 +1,5 @@
 const accountServices = require('../services/accountService');
 
-let getInFromAc = async (req, res) => {
-    try {
-        let result = await accountServices.getInFromAc(req.body);
-        res.status(200).json({
-            mess: "Information của Account",
-            data: result
-        });
-    } catch (error) {
-        res.status(500).json({
-            err: error
-        });
-    }
-}
-
 let getAccount = async (req, res) => {
     try {
         let result = await accountServices.getAccount();
@@ -28,11 +14,11 @@ let getAccount = async (req, res) => {
     }
 }
 
-let addAccount = async (req, res) => {
+let editAccount = async (req, res) => {
     try {
-        let result = await accountServices.addAccount(req.body);
+        let result = await accountServices.editAccount(req.body);
         res.status(200).json({
-            mess: "Đã thêm thành công",
+            mess: "Đã cập nhập thành công",
             data: result
         });
     } catch (error) {
@@ -41,16 +27,8 @@ let addAccount = async (req, res) => {
         });
     }
 }
-let editAccount = (req, res) => {
-    res.send("edit Account");
-}
-let delAccount = (req, res) => {
-    res.send("del Account");
-}
+
 module.exports = {
-    getAccount: getAccount,
-    addAccount: addAccount,
-    editAccount: editAccount,
-    delAccount: delAccount,
-    getInFromAc: getInFromAc
+    getAccount,
+    editAccount
 }

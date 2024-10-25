@@ -1,4 +1,3 @@
-const { DATE } = require('sequelize');
 const db = require('../models/index')
 
 let getInformation = async () => {
@@ -28,7 +27,33 @@ let addInformation = async (data) => {
     }
 }
 
+let editInformation = async (data) => {
+    try {
+        let editInformation = await db.Information.update(data, {
+            where: { id: data.id }
+        });
+        return editInformation;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+let delInformation = async (data) => {
+    try {
+        let delInformation = await db.Information.destroy({
+            where: { id: data.id }
+        });
+        return delInformation;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 module.exports = {
-    getInformation: getInformation,
-    addInformation: addInformation
+    getInformation,
+    addInformation,
+    editInformation,
+    delInformation
 }
