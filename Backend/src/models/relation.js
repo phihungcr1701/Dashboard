@@ -8,7 +8,7 @@ Account.hasOne(Information, {
 });
 
 Information.belongsTo(Account, {
-    foreignKey: 'accountId',  
+    foreignKey: 'accountId',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });

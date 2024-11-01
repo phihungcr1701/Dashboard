@@ -6,7 +6,7 @@ const Information = sequelize.define('Information', {
         primaryKey: true,
         autoIncrement: true
     },
-    name : {
+    name: {
         type: DataTypes.STRING
     },
     gender: {
