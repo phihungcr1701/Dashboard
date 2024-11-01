@@ -27,16 +27,13 @@ function Header() {
                     </button>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li>
-                            <Link className="dropdown-item" to="/seeting">Settings</Link>
-                        </li>
-                        <li>
-                            <Link className="dropdown-item" to="/seeting">Cài đặt tài khoản</Link>
+                            <Link className="dropdown-item" to="/setting">Cài đặt tài khoản</Link>
                         </li>
                         <li>
                             <hr className="dropdown-divider" />
                         </li>
                         <li>
-                            <Link className="dropdown-item" to="#!">Đăng xuất</Link>
+                            <Link className="dropdown-item" to="/login">Đăng xuất</Link>
                         </li>
                     </ul>
                 </li>

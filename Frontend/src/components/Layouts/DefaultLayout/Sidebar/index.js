@@ -27,7 +27,7 @@ function Sidebar() {
                         content={"Thông báo"}
                     />
                     <ButtonNav
-                        path={"seeting"}
+                        path={"setting"}
                         icon={faTable}
                         content={"Cài đặt tài khoản"}
                     />

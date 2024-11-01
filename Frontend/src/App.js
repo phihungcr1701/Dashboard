@@ -16,9 +16,13 @@ function App() {
 								key={index}
 								path={route.path}
 								element={
-									<Layout>
+									(route.defaultLayout &&
+										<Layout>
+											<Page />
+										</Layout>
+									) || (
 										<Page />
-									</Layout>
+									)
 								}
 							/>
 						);
