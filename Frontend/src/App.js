@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { adminRoute } from './routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Layout from './components/Layouts/DefaultLayout'
+import DefaultLayout from './components/Layouts/DefaultLayout';
 
 function App() {
 	return (
@@ -17,11 +17,11 @@ function App() {
 								path={route.path}
 								element={
 									(route.defaultLayout &&
-										<Layout>
+										<DefaultLayout>
 											<Page />
-										</Layout>
+										</DefaultLayout>
 									) || (
-										<Page />
+										<Page />	
 									)
 								}
 							/>

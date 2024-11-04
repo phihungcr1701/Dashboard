@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
+import { useGetContext } from '../../../pages/Login/Store/Hooks';
 
-function CenterLayout({ children, title, accountItems, informationItems}) {
+function CenterLayout({children}, ref) {
+    const { data, formRef } = useGetContext();
+    const { title, accountItems, informationItems } = data;
+
     return (
         <section className="background-radial-gradient overflow-hidden">
             <div className="container px-4 py-5 text-center text-lg-start my-5">
@@ -24,13 +28,13 @@ function CenterLayout({ children, title, accountItems, informationItems}) {
                                     <h3 className="text-center mt-2 mb-2 fw-bold text-primary">{title}</h3>
                                 </div>
                             </div>
-                            <div className="card-body px-4 py-5">
-                                <form>
+                            <div className="card-body px-4 py-5" >
+                                <form ref={formRef}>
                                     <div className="row">
                                         {informationItems.id.map((value, index) => (
                                             <div className="col-md-6 mb-4">
-                                                <div className="form-floating">
-                                                    <input type={informationItems.type[index]} className="form-control" id={informationItems.id[index]} placeholder={informationItems.name[index]} />
+                                                <div className="form-floating" key={`${value}-${index}`}>
+                                                    <input type={informationItems.type[index]} className="form-control" name={informationItems.id[index]} placeholder={informationItems.name[index]} />
                                                     <label htmlFor={informationItems.id[index]}>{informationItems.name[index]}</label>
                                                 </div>
                                             </div>
@@ -38,19 +42,19 @@ function CenterLayout({ children, title, accountItems, informationItems}) {
                                     </div>
 
                                     {accountItems.id.map((value, index) => (
-                                        <div className="form-floating mb-4">
-                                            <input type={accountItems.type[index]} className="form-control" id={accountItems.id[index]} placeholder={accountItems.name[index]} />
+                                        <div className="form-floating mb-4" key={`${value}-${index}`}>
+                                            <input type={accountItems.type[index]} className="form-control" name={accountItems.id[index]} placeholder={accountItems.name[index]} />
                                             <label htmlFor={accountItems.id[index]}>{accountItems.name[index]}</label>
                                         </div>
                                     ))}
                                     
                                     <div className="form-check form-switch d-flex align-items-center mb-3">
-                                        <input className="form-check-input" type="checkbox" id="rememberMe" />
-                                        <label className="form-check-label mb-0 ms-3" htmlFor="rememberMe">Show password</label>
+                                        <input className="form-check-input" type="checkbox" name="showPassword" />
+                                        <label className="form-check-label mb-0 ms-3" htmlFor="showPassword">Show password</label>
                                     </div>
 
                                     <div className="d-flex justify-content-center">
-                                        <button type="submit" className="btn btn-primary btn-lg mb-4 w-100">Enter</button>
+                                        <button type='submit' className="btn btn-primary btn-lg mb-4 w-100" name="enter">Enter</button>
                                     </div>
 
                                     <div className="text-center">
@@ -66,4 +70,4 @@ function CenterLayout({ children, title, accountItems, informationItems}) {
     );
 }
 
-export default CenterLayout;
+export default forwardRef(CenterLayout);
