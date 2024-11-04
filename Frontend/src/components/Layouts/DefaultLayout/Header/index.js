@@ -1,12 +1,38 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
+    const [isSidebarToggled, setIsSidebarToggled] = useState(false);
+
+    const handleClick = (event) => {
+        event.preventDefault();
+        setIsSidebarToggled(prevState => !prevState);
+        localStorage.setItem('sb|sidebar-toggle', !isSidebarToggled);
+    };
+
+    useEffect(() => {
+        const sidebarToggleState = localStorage.getItem('sb|sidebar-toggle');
+        if (sidebarToggleState === 'true') {
+            setIsSidebarToggled(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isSidebarToggled) {
+            document.body.classList.add('sb-sidenav-toggled');
+        } else {
+            document.body.classList.remove('sb-sidenav-toggled');
+        }
+    }, [isSidebarToggled]);
     return (
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <Link className="navbar-brand ps-3" to="/">WebClient Admin</Link>
-            <button className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0">
+            <button
+                className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+                onClick={handleClick}
+            >
                 <FontAwesomeIcon icon={faBars} />
             </button>
 
