@@ -1,17 +1,17 @@
 const express = require('express');
 const route = express.Router();
 const account = require('../controllers/accountController');
-const infor = require('../controllers/inforController');
+const information = require('../controllers/informationController');
+const controller = require('../controllers/index')
 
-route.get('/getUser', account.getAccount);
-route.post('/addUser', account.addAccount);
-route.put('/editUser', account.editAccount);
-route.delete('/delUser', account.delAccount);
+route.get('/getAccount', account.getAccount);
+route.put('/editAccount', account.editAccount); // all data account need edit
 
+route.get('/getInformation', information.getInformation);
+route.put('/editInformation', information.editInformation);
 
-route.get('/getInfor', infor.getInfor);
-route.post('/addInfor', infor.addInfor);
-route.put('/editInfor', infor.editInfor);
-route.delete('/delInfor', infor.delInfor);
+route.get('/find', controller.find); //id account
+route.post('/add', controller.add); //data account {username, password, role(if it have)}
+route.delete('/del', controller.del); //id account
 
 module.exports = route;

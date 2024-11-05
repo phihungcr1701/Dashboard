@@ -1,10 +1,10 @@
-const accountServices = require('../services/accountService');
+const informationServices = require('../services/informationService')
 
-let getAccount = async (req, res) => {
+let getInformation = async (req, res) => {
     try {
-        let result = await accountServices.getAccount();
+        let result = await informationServices.getInformation();
         res.status(200).json({
-            mess: "Danh sách Accounts",
+            mess: "Danh sách Informations",
             data: result
         });
     } catch (error) {
@@ -14,9 +14,9 @@ let getAccount = async (req, res) => {
     }
 }
 
-let editAccount = async (req, res) => {
+let editInformation = async (req, res) => {
     try {
-        let result = await accountServices.editAccount(req.body);
+        let result = await informationServices.editInformation(req.body);
         res.status(200).json({
             mess: "Đã cập nhập thành công",
             data: result
@@ -29,6 +29,6 @@ let editAccount = async (req, res) => {
 }
 
 module.exports = {
-    getAccount,
-    editAccount
+    getInformation,
+    editInformation
 }

@@ -22,8 +22,10 @@ const Information = sequelize.define('Information', {
         type: DataTypes.STRING
     },
     accountId: {
-        type: DataTypes.INTEGER
-    }
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        unique: true
+    } 
 })
 
 module.exports = Information
