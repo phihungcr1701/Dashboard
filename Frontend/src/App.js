@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { adminRoute } from './routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import DefaultLayout from './components/Layouts/DefaultLayout';
+import DefaultLayout from './components/Layouts/DefaultLayout'
+import CenterLayout from './components/Layouts/CenterLayout';
 
 function App() {
 	return (
@@ -21,7 +22,9 @@ function App() {
 											<Page />
 										</DefaultLayout>
 									) || (
-										<Page />	
+										<CenterLayout>
+											<Page />
+										</CenterLayout>
 									)
 								}
 							/>
