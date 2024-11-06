@@ -1,8 +1,50 @@
 import { useGetContext } from '../Store';
+import { useState } from 'react';
 
 function LoginRegister({children}) {
     const {data, formRef} = useGetContext();
     const {title, accountItems, informationItems} = data;
+
+    const [state, setState] = useState({
+        check: {email: "", password: "", confirmPassword: "confirmPassword"},           
+        show: false, 
+    });
+
+    const handleCheck = event => {
+        event.preventDefault();
+        const formElement = formRef.current;
+        const formData = new FormData(formElement);
+
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const confirmPassword = formData.get("confirmPassword");
+
+        const newCheck = {email: "", password: "", confirmPassword: ""};
+
+        if (email !== "") {
+            newCheck.email = 'email';
+        }
+
+        if (password !== "") {
+            newCheck.password = 'password';
+        }
+
+        if (confirmPassword === password) {
+            newCheck.confirmPassword = 'confirmPassword';
+        }
+
+        setState(prevState => ({
+            ...prevState, 
+            check: newCheck, 
+        }));
+    }
+
+    const handleShow = event => {
+        setState(prevState => ({
+            ...prevState,
+            show: !state.show
+        }))
+    }
 
     return (
         <>
@@ -11,40 +53,64 @@ function LoginRegister({children}) {
                     <h3 className="text-center mt-2 mb-2 fw-bold text-primary text-uppercase">{title}</h3>
                 </div>
             </div>
-            <div className="card-body px-4 py-5" >
-                <form ref={formRef}>
+            <form ref={formRef}>
+                <div className="card-body px-4 py-5" >
                     <div className="row">
-                        {informationItems.id.map((value, index) => (
+                        {informationItems.name.map((value, index) => (
                             <div className="col-md-6 mb-4">
                                 <div className="form-floating" key={`${value}-${index}`}>
-                                    <input type={informationItems.type[index]} className="form-control" name={informationItems.id[index]} placeholder={informationItems.name[index]} />
-                                    <label htmlFor={informationItems.id[index]}>{informationItems.name[index]}</label>
+                                    <input type={informationItems.type[index]} className="form-control" name={informationItems.name[index]} placeholder={informationItems.text[index]} />
+                                    <label htmlFor={informationItems.name[index]}>{informationItems.text[index]}</label>
                                 </div>
                             </div>
                         ))}   
                     </div>
 
-                    {accountItems.id.map((value, index) => (
-                        <div className="form-floating mb-4" key={`${value}-${index}`}>
-                            <input type={accountItems.type[index]} className="form-control" name={accountItems.id[index]} placeholder={accountItems.name[index]} />
-                            <label htmlFor={accountItems.id[index]}>{accountItems.name[index]}</label>
+                    {accountItems.name.map((value, index) => (
+                        <div key={`${value}-${index}`}>
+                            <div className="form-floating">
+                                <input 
+                                    type={state.show && (accountItems.name[index] === "password" || accountItems.name[index] === "confirmPassword") 
+                                        ? "text" : accountItems.type[index]} 
+                                    className="form-control" 
+                                    name={accountItems.name[index]} 
+                                    placeholder={accountItems.text[index]} 
+                                    onChange={handleCheck} 
+                                />
+                                <label htmlFor={accountItems.name[index]}>{accountItems.text[index]}</label>
+                            </div>
+                            <label 
+                                name={accountItems.name[index] + "Label"} 
+                                className="mb-2 ms-2" 
+                                style={{ color: '#ff0000' }}
+                            >
+                                {
+                                    accountItems.name[index] !== "confirmPassword" && 
+                                    state.check[accountItems.name[index]] === "" && 
+                                    (`* Thiếu ${accountItems.text[index].toLowerCase()} * `)
+                                }
+                                {
+                                    accountItems.name[index] === "confirmPassword" && 
+                                    state.check[accountItems.name[index]] === "" && 
+                                    (`* Không khớp mật khẩu * `)
+                                }
+                            </label>
                         </div>
                     ))}
                     
                     <div className="form-check form-switch d-flex align-items-center mb-3">
-                        <input className="form-check-input" type="checkbox" name="showPassword" />
+                        <input className="form-check-input" type="checkbox" name="showPassword" onClick={handleShow} />
                         <label className="form-check-label mb-0 ms-3" htmlFor="showPassword">Hiển thị mật khẩu</label>
                     </div>
 
                     <div className="d-flex justify-content-center">
                         <button type='submit' className="btn btn-primary btn-lg mb-4 w-100" name="enter">{title}</button>
                     </div>
-
-                    <div className="text-center">
-                        {children}
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div className="card-footer text-center align-items-center py-4" >
+                {children}
+                </div>
+            </form>
         </>
     );
 }

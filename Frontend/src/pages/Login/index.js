@@ -12,6 +12,8 @@ function Login() {
     useEffect(() => {
         const formElement = formRef.current;
 
+        console.log(formElement);
+
         const handleSubmit = async (event) => {
             event.preventDefault();
 
@@ -25,12 +27,7 @@ function Login() {
                 };
             }
 
-            if (formDataObject.name === "" || formDataObject.password === "")
-                alert("Nhập đầy đủ thông tin!");
-            else {
-                const loginResult = await checkLogin(formDataObject);
-                dispatch(loginResult);
-            }
+            console.log(formElement)
         };
 
         formElement.addEventListener('submit', handleSubmit);
@@ -39,9 +36,6 @@ function Login() {
             formElement.removeEventListener('submit', handleSubmit);
         };
     }, []);
-    
-    if (state)
-        navigate('/');
 
     return (
         <Provider value={{data, formRef}}>
