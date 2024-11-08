@@ -1,0 +1,44 @@
+.table--fs {
+    font-size: 14px;
+}
+
+.datatable__Link--sort {
+    text-decoration: none;
+    color: #212529;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding-right: 1rem;
+}
+
+.datatable__Link--sort::after,
+.datatable__Link--sort::before {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    right: 4px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    opacity: 0.2;
+}
+
+.datatable__Link--sort::after {
+    border-bottom: 4px solid #000;
+    border-top: 4px solid transparent;
+    top: 0;
+}
+
+.datatable__Link--sort::before {
+    border-top: 4px solid #000;
+    bottom: 4px;
+}
+
+.datatable--sortAsc::after {
+    opacity: 0.6;
+}
+
+.datatable--sortDesc::before {
+    opacity: 0.6;
+}

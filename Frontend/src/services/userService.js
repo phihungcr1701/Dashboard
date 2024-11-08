@@ -1,8 +1,14 @@
 import * as request from '../utils';
 
-const getAllUser = async () => {
+const getAllUser = async (inputSearch = null, activeColumn = null, isSortAsc) => {
     try {
-        const users = await request.get('getInfor')
+        const users = await request.get('getInformation', {
+            params: {
+                inputSearch: inputSearch,
+                activeColumn: activeColumn,
+                isSortAsc: isSortAsc
+            }
+        })
         return users.data;
     } catch (error) {
         console.log(error);
