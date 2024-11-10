@@ -3,9 +3,10 @@ import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement
 
 ChartJS.register(LineController, LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend);
 
-const AreaChart = () => {
+const AreaChart = ({ data }) => {
     const chartRef = useRef(null); 
     const chartInstance = useRef(null); 
+    
 
     useEffect(() => {
         const ctx = chartRef.current.getContext('2d');
@@ -17,9 +18,9 @@ const AreaChart = () => {
         chartInstance.current = new ChartJS(ctx, {
             type: 'line',
             data: {
-                labels: ["Mar 1", "Mar 2", "Mar 3", "Mar 4", "Mar 5", "Mar 6", "Mar 7", "Mar 8", "Mar 9", "Mar 10", "Mar 11", "Mar 12", "Mar 13"],
+                labels: data.x,
                 datasets: [{
-                    label: "Sessions",
+                    label: "User",
                     lineTension: 0.3,
                     backgroundColor: "rgba(2,117,216,0.2)",
                     borderColor: "rgba(2,117,216,1)",
@@ -30,41 +31,43 @@ const AreaChart = () => {
                     pointHoverBackgroundColor: "rgba(2,117,216,1)",
                     pointHitRadius: 50,
                     pointBorderWidth: 2,
-                    data: [10000, 30162, 26263, 18394, 18287, 28682, 31274, 33259, 25849, 24159, 32651, 31984, 38451],
+                    data: data.y,
                 }],
             },
             options: {
+                responsive: true, 
+                maintainAspectRatio: false, 
                 scales: {
-                    xAxes: [{
-                        time: {
-                            unit: 'date'
-                        },
-                        gridLines: {
+                    x: {
+                        type: 'category',
+                        grid: {
                             display: false
                         },
                         ticks: {
-                            maxTicksLimit: 7
+                            maxTicksLimit: 12
                         }
-                    }],
-                    yAxes: [{
+                    },
+                    y: {
+                        min: 0,
+                        max: data.max,
                         ticks: {
-                            min: 0,
-                            max: 40000,
-                            maxTicksLimit: 5
+                            maxTicksLimit: 7
                         },
-                        gridLines: {
+                        grid: {
                             color: "rgba(0, 0, 0, .125)",
                         }
-                    }],
+                    }
                 },
-                legend: {
-                    display: false
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 }
             }
         });
-    }, []); 
+    }, [data.x, data.y, data.max]); 
 
-    return (<canvas ref={chartRef} height="100%" /> );
+    return (<canvas ref={chartRef} height="400%" /> );
 };
 
 export default AreaChart;
