@@ -67,6 +67,7 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
     const handleInputChange = (value) => {
         setInput(value);
         onSearchChange(value);
+        setCurrentPage(1);
     }
 
     const dataCurrentPage = data.slice((currentPage - 1) * valueCheck, currentPage * valueCheck);
@@ -130,7 +131,7 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4">Không có dữ liệu</td>
+                            <td colSpan="5">Không có dữ liệu</td>
                         </tr>
                     )}
                 </tbody>

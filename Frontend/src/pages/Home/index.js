@@ -18,33 +18,29 @@ function Home() {
                     background={"primary"}
                     icon={faUsers}
                     content={"Tổng số người dùng"}
-                >
-                    <span className="h5">30</span>
-                </Card>
+                    count={30}
+                />
 
                 <Card
                     background={"warning"}
                     icon={faUserPlus}
                     content={"Người dùng mới trong tháng"}
-                >
-                    <span className="h5">30</span>
-                </Card>
+                    count={30}
+                />
 
                 <Card
                     background={"danger"}
                     icon={faExclamationTriangle}
                     content={"Người dùng không hoạt động"}
-                >
-                    <span className="h5">30</span>
-                </Card>
+                    count={30}
+                />
 
                 <Card
                     background={"success"}
                     icon={faChartLine}
                     content={"Lượt truy cập trong tháng"}
-                >
-                    <span className="h5">30</span>
-                </Card>
+                    count={30}
+                />
             </div>
 
             <div className="row">
@@ -63,9 +59,11 @@ function Home() {
                     />
                 </div>
             </div>
-            <Table icon={faTable} showBreadCrumb={false}>
-                {/* {children} */}
-            </Table>
+            <Table
+                icon={faTable}
+                showBreadCrumb={false}
+            // title={"Danh sách người dùng"}
+            />
         </>
     );
 }

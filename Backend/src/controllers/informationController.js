@@ -1,8 +1,10 @@
 const informationServices = require('../services/informationService')
 
 let getInformation = async (req, res) => {
+    const { type, inputSearch, activeColumn, isSortAsc } = req.query;
+    // console.log("input:", inputSearch, activeColumn, isSortAsc);
     try {
-        let result = await informationServices.getInformation();
+        let result = await informationServices.getInformation(type, inputSearch, activeColumn, isSortAsc);
         res.status(200).json({
             mess: "Danh sách Informations",
             data: result

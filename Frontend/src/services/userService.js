@@ -1,9 +1,10 @@
 import * as request from '../utils';
 
-const getAllUser = async (inputSearch = null, activeColumn = null, isSortAsc) => {
+const getAllUser = async (type, inputSearch = null, activeColumn = null, isSortAsc) => {
     try {
         const users = await request.get('getInformation', {
             params: {
+                type: type,
                 inputSearch: inputSearch,
                 activeColumn: activeColumn,
                 isSortAsc: isSortAsc

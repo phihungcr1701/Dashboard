@@ -1,9 +1,78 @@
+const { Op, where } = require('sequelize');
 const db = require('../models/index')
 
-let getInformation = async () => {
+let handleActiveColumn = (activeColumn) => {
+    let newActiveColumn;
+    switch (activeColumn) {
+        case "Tên":
+            newActiveColumn = "Name";
+            break;
+        case "Giới tính":
+            newActiveColumn = "Gender";
+            break;
+        case "Ngày sinh":
+            newActiveColumn = "Date";
+            break;
+        case "Số điện thoại":
+            newActiveColumn = "Phone";
+            break;
+        default:
+            break;
+    }
+    return newActiveColumn;
+}
+
+let handleWhereClause = (type) => {
+    let whereClause;
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
+    switch (type) {
+        case "Danh sách người dùng":
+            whereClause = {};
+            break;
+        case "Người dùng mới trong tháng":
+
+            whereClause = {
+                createdAt: {
+                    [Op.gte]: firstDayOfMonth
+                }
+            };
+            break;
+        case "Người dùng không hoạt động":
+            //
+            break;
+        case "Lượt truy cập trong tháng":
+            whereClause = {
+                updatedAt: {
+                    [Op.gte]: firstDayOfMonth
+                }
+            };
+            break;
+        default:
+            break;
+    }
+    return whereClause;
+}
+
+let getInformation = async (type, inputSearch, activeColumn, isSortAsc) => {
+
+
+    let sort = (isSortAsc === "true") ? true : false;
+    const whereClause = inputSearch.trim() !== "" ? ({
+        name: {
+            [Op.regexp]: `${inputSearch}*`
+        }
+    }) : {};
+
+    const orderClause = activeColumn ? ([[handleActiveColumn(activeColumn), sort ? "ASC" : "DESC"]]) : undefined;
+
     try {
-        let Information = await db.Information.findAll();
-        return Information;
+        const information = await db.Information.findAll({
+            where: { ...whereClause, ...handleWhereClause(type) },
+            order: orderClause,
+            logging: console.log
+        })
+        return information;
     } catch (error) {
         console.log(error);
         throw error;
