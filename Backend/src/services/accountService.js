@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const db = require('../models/index');
 
 let getAccount = async () => {
@@ -12,14 +13,29 @@ let getAccount = async () => {
 
 let addAccount = async (data) => {
     try {
+        let checkAccount = await db.Account.findOne({
+            where: {
+                email: data.email
+            }
+        });
+
+        if (checkAccount) {
+            let error = new Error();
+            error.statusCode = 409;
+            throw error;
+        }
+
         let newAccount = await db.Account.create({
             email: data.email,
             password: data.password,
             role: data.role || "user"
         });
+        await db.Information.create({
+            name: data.name,
+            accountId: newAccount.id
+        });
         return newAccount;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
