@@ -5,13 +5,13 @@ export const setLoginInterface = () => ({
     data: {
         accountItems: {
             type: ["text", "password"],
-            id: ["email", "password"],
-            name: ["Địa chỉ email", "Mật khẩu"]
+            name: ["email", "password"],
+            text: ["Địa chỉ email", "Mật khẩu"]
         },
         informationItems: {
             type: [],
-            id: [],
-            name: []
+            name: [],
+            text: []
         },
         title: "Đăng nhập"
     }
@@ -21,14 +21,14 @@ export const setRegisterInterface = () => ({
     type: SET_REGISTER_INTERFACE,
     data: {
         accountItems: {
-            type: ["text", "password"],
-            id: ["email", "password"],
-            name: ["Địa chỉ email", "Mật khẩu"]
+            type: ["text", "password", "password"],
+            name: ["email", "password", "confirmPassword"],
+            text: ["Địa chỉ email", "Mật khẩu", "Xác nhận mật khẩu"]
         },
         informationItems: {
             type: ["text", "text"],
-            id: ["firstName", "lastName"],
-            name: ["Họ", "Tên"]
+            name: ["firstName", "lastName"],
+            text: ["Họ", "Tên"]
         },
         title: "Đăng kí"
     }
