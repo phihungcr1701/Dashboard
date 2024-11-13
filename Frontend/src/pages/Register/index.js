@@ -1,54 +1,61 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useReducer } from "react";
-import LoginRegister from "../../components/LoginRegister";
-import { setRegisterInterface, checkEmail, Provider, Reducer, initStateRegister } from "../../components/Store";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import InputGroup from "../../components/InputGroup";
+import FormFloating from "../../components/FormFloating";
 
 function Register() {
-    const formRef = useRef();
-    const [state, dispatch] = useReducer(Reducer, initStateRegister);
-    const { data } = setRegisterInterface();
-    const navigate = useNavigate()
-
-    // useEffect(() => {
-    //     const formElement = formRef.current;
-
-    //     const handleSubmit = async (event) => {
-    //         event.preventDefault();
-
-    //         const formData = new FormData(formElement);
-    //         let formDataObject = { showPassword: 'off' };
-
-    //         for (const [name, value] of formData.entries()) {
-    //             formDataObject = {
-    //                 ...formDataObject,
-    //                 [name]: value,
-    //             };
-    //         }
-
-    //         if (formDataObject.name === "" || formDataObject.password === "")
-    //             alert("Nhập đầy đủ thông tin!");
-    //         else {
-    //             const loginResult = await checkLogin(formDataObject);
-    //             dispatch(loginResult);
-    //         }
-    //     };
-
-    //     formElement.addEventListener('submit', handleSubmit);
-
-    //     return () => {
-    //         formElement.removeEventListener('submit', handleSubmit);
-    //     };
-    // }, []);
-    
-    // if (state)
-    //     navigate('/');
+    const [showPass, setShowPass] = useState(false);
+    const handleShowPass = (value) => {
+        setShowPass(value);
+    }
 
     return (
-        <Provider value={{data, formRef}}>
-            <LoginRegister>
-                <Link to="/login">Bạn đã có tài khoản?</Link>
-            </LoginRegister>
-        </Provider>
+        <InputGroup
+            title={"Đăng ký"}
+            onShowPassClick={value => handleShowPass(value)}
+        >
+            <>
+                <div className="row">
+                    <div className="col-md-6">
+                        <FormFloating
+                            type={"text"}
+                            id={"lastName"}
+                            placeholder={"Họ"}
+                            labelContent={"Họ"}
+                        />
+                    </div>
+                    <div className="col-md-6">
+                        <FormFloating
+                            type={"text"}
+                            id={"firstName"}
+                            placeholder={"Tên"}
+                            labelContent={"Tên"}
+                        />
+                    </div>
+                </div>
+                <FormFloating
+                    type={"email"}
+                    id={"email"}
+                    placeholder={"Địa chỉ Email"}
+                    labelContent={"Địa chỉ Email"}
+                />
+                <FormFloating
+                    type={"password"}
+                    id={"password"}
+                    placeholder={"Mật khẩu"}
+                    labelContent={"Mật khẩu"}
+                    showPass={showPass}
+                />
+                <FormFloating
+                    type={"password"}
+                    id={"confirmPassword"}
+                    placeholder={"Nhập lại mật khẩu"}
+                    labelContent={"Nhập lại mật khẩu"}
+                    showPass={showPass}
+                />
+            </>
+            <Link to="/login">Bạn đã có tài khoản?</Link>
+        </InputGroup>
     );
 }
 

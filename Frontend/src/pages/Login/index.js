@@ -1,49 +1,55 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useReducer } from "react";
-import LoginRegister from "../../components/LoginRegister";
-import {setLoginInterface, checkLogin, Provider, Reducer, initStateLogin} from '../../components/Store'
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import FormFloating from "../../components/FormFloating";
+import InputGroup from "../../components/InputGroup";
 
 function Login() {
-    const formRef = useRef();
-    const [state, dispatch] = useReducer(Reducer, initStateLogin);
-    const { data } = setLoginInterface();
-    const navigate = useNavigate()
+    const [showPass, setShowPass] = useState(false);
+    const [emailInput, setEmailInput] = useState("");
+    const [passInput, setPassInput] = useState("");
+    const [canSubmit, setCanSubmit] = useState(false);
 
-    useEffect(() => {
-        const formElement = formRef.current;
-
-        console.log(formElement);
-
-        const handleSubmit = async (event) => {
-            event.preventDefault();
-
-            const formData = new FormData(formElement);
-            let formDataObject = { showPassword: 'off' };
-
-            for (const [name, value] of formData.entries()) {
-                formDataObject = {
-                    ...formDataObject,
-                    [name]: value,
-                };
-            }
-
-            console.log(formElement)
-        };
-
-        formElement.addEventListener('submit', handleSubmit);
-
-        return () => {
-            formElement.removeEventListener('submit', handleSubmit);
-        };
-    }, []);
-
+    const handleShowPass = (value) => {
+        setShowPass(value);
+    }
+    const handleEmailInputChange = (value) => {
+        setEmailInput(value);
+        // console.log("Email: ", value);
+    }
+    const handlePassInputChange = (value) => {
+        setPassInput(value);
+        // console.log("Name: ", value);
+    }
+    const handleSubmit = () => {
+        if (!emailInput && !passInput) {
+            console.log("Hãy điền đầy đủ thông tin");
+        }
+    }
     return (
-        <Provider value={{data, formRef}}>
-            <LoginRegister>
-                <Link to="/register">Tạo tài khoản mới?</Link>
-            </LoginRegister>
-        </Provider>
-        
+        <InputGroup
+            title={"Đăng nhập"}
+            onShowPassClick={handleShowPass}
+            onSubmit={handleSubmit}
+        >
+            <>
+                <FormFloating
+                    type={"email"}
+                    id={"email"}
+                    placeholder={"Địa chỉ Email"}
+                    labelContent={"Địa chỉ Email"}
+                    onInputChange={handleEmailInputChange}
+                />
+                <FormFloating
+                    type={"password"}
+                    id={"password"}
+                    placeholder={"Mật khẩu"}
+                    labelContent={"Mật khẩu"}
+                    showPass={showPass}
+                    onInputChange={handlePassInputChange}
+                />
+            </>
+            <Link to="/register">Tạo tài khoản mới?</Link>
+        </InputGroup>
     );
 }
 

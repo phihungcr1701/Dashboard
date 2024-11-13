@@ -3,13 +3,13 @@ import axios from 'axios';
 let initState = null;
 
 const getInformation = async () => {
-    await axios.get('http://localhost:1234/api/data')
-    .then(response => {
-        initState = response.data
-    })
-    .catch (error => {
-        console.log(error);
-    });
+    await axios.get('https://644fc014-665a-49bf-994d-d524e5c7bd83.mock.pstmn.io/api/data')
+        .then(response => {
+            initState = response.data
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }
 
 export const getNewUser = async () => {
@@ -22,7 +22,7 @@ export const getNewUser = async () => {
         const monthStart = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
         const monthEnd = new Date(currentDate.getFullYear(), currentDate.getMonth() - i + 1, 0);
         last12Months.push({
-            month: `${monthStart.getMonth() + 1}/${monthStart.getFullYear()}`, 
+            month: `${monthStart.getMonth() + 1}/${monthStart.getFullYear()}`,
             count: 0,
             start: monthStart,
             end: monthEnd
@@ -33,7 +33,7 @@ export const getNewUser = async () => {
         const createdAt = new Date(user.createdAt);
 
         last12Months.forEach(month => {
-            const [monthNumber, year] = month.month.split('/'); 
+            const [monthNumber, year] = month.month.split('/');
             if (parseInt(monthNumber) === createdAt.getMonth() + 1 && parseInt(year) === createdAt.getFullYear()) {
                 month.count++;
             }
@@ -41,8 +41,8 @@ export const getNewUser = async () => {
     });
 
     return {
-        data : {
-            max: Math.max(...last12Months.map(month => month.count)), 
+        data: {
+            max: Math.max(...last12Months.map(month => month.count)),
             x: last12Months.map(month => (month.month)),
             y: last12Months.map(month => (month.count))
         }
@@ -59,7 +59,7 @@ export const getUserAccept = async () => {
         const monthStart = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
         const monthEnd = new Date(currentDate.getFullYear(), currentDate.getMonth() - i + 1, 0);
         last12Months.push({
-            month: `${monthStart.getMonth() + 1}/${monthStart.getFullYear()}`, 
+            month: `${monthStart.getMonth() + 1}/${monthStart.getFullYear()}`,
             count: 0,
             start: monthStart,
             end: monthEnd
@@ -70,7 +70,7 @@ export const getUserAccept = async () => {
         const updatedAt = new Date(user.updatedAt);
 
         last12Months.forEach(month => {
-            const [monthNumber, year] = month.month.split('/'); 
+            const [monthNumber, year] = month.month.split('/');
             if (parseInt(monthNumber) === updatedAt.getMonth() + 1 && parseInt(year) === updatedAt.getFullYear()) {
                 month.count++;
             }
@@ -78,8 +78,8 @@ export const getUserAccept = async () => {
     });
 
     return {
-        data : {
-            max: Math.max(...last12Months.map(month => month.count)), 
+        data: {
+            max: Math.max(...last12Months.map(month => month.count)),
             x: last12Months.map(month => (month.month)),
             y: last12Months.map(month => (month.count))
         }
@@ -96,7 +96,7 @@ export const getUserNoAction = async () => {
         const monthStart = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
         const monthEnd = new Date(currentDate.getFullYear(), currentDate.getMonth() - i + 1, 0);
         last12Months.push({
-            month: `${monthStart.getMonth() + 1}/${monthStart.getFullYear()}`, 
+            month: `${monthStart.getMonth() + 1}/${monthStart.getFullYear()}`,
             count: 0,
             start: monthStart,
             end: monthEnd
@@ -113,10 +113,10 @@ export const getUserNoAction = async () => {
     });
 
     return {
-        data : {
-            max: Math.max(...last12Months.map(month => month.count)),  
-            x: last12Months.map(month => month.month),  
-            y: last12Months.map(month => month.count)  
+        data: {
+            max: Math.max(...last12Months.map(month => month.count)),
+            x: last12Months.map(month => month.month),
+            y: last12Months.map(month => month.count)
         }
     };
 };
