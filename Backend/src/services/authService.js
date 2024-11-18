@@ -77,7 +77,7 @@ let registerAccount = async (data) => {
 let loginAccount = async (data, res) => {
     let accessToken;
     try {
-        let account = await db.Account.findOne({
+        const account = await db.Account.findOne({
             where: {
                 email: data.email,
                 password: data.password
