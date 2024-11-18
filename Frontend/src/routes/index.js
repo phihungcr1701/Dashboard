@@ -12,15 +12,14 @@ const adminRoute = [
     { path: '/chart', component: Chart, defaultLayout: true },
     { path: '/notification', component: Notification, defaultLayout: true },
     { path: '/setting', component: Setting, defaultLayout: true },
-    { path: '/login', component: Login, defaultLayout: false },
-    { path: '/register', component: Register, defaultLayout: false }
+
 ];
 const userRoute = [
     //trien khai sau
 ];
 const shareRoute = [
-    // trien khai sau
-    //Route su dung chung
+    { path: '/login', component: Login, defaultLayout: false },
+    { path: '/register', component: Register, defaultLayout: false }
 ];
 
 export { adminRoute, userRoute, shareRoute };

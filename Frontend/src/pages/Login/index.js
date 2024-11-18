@@ -1,29 +1,34 @@
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import FormFloating from "../../components/FormFloating";
 import InputGroup from "../../components/InputGroup";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../services/authService";
+
 
 function Login() {
     const [showPass, setShowPass] = useState(false);
-    const [emailInput, setEmailInput] = useState("");
-    const [passInput, setPassInput] = useState("");
-    const [canSubmit, setCanSubmit] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // const [canSubmit, setCanSubmit] = useState(false);
 
     const handleShowPass = (value) => {
         setShowPass(value);
     }
-    const handleEmailInputChange = (value) => {
-        setEmailInput(value);
-        // console.log("Email: ", value);
+    const handleEmailChange = (value) => {
+        setEmail(value);
     }
-    const handlePassInputChange = (value) => {
-        setPassInput(value);
-        // console.log("Name: ", value);
+    const handlePasswordChange = (value) => {
+        setPassword(value);
     }
     const handleSubmit = () => {
-        if (!emailInput && !passInput) {
+        if (!email && !password) {
             console.log("Hãy điền đầy đủ thông tin");
         }
+        const user = { email, password };
+        loginUser(user, dispatch, navigate);
     }
     return (
         <InputGroup
@@ -37,7 +42,7 @@ function Login() {
                     id={"email"}
                     placeholder={"Địa chỉ Email"}
                     labelContent={"Địa chỉ Email"}
-                    onInputChange={handleEmailInputChange}
+                    onInputChange={handleEmailChange}
                 />
                 <FormFloating
                     type={"password"}
@@ -45,7 +50,7 @@ function Login() {
                     placeholder={"Mật khẩu"}
                     labelContent={"Mật khẩu"}
                     showPass={showPass}
-                    onInputChange={handlePassInputChange}
+                    onInputChange={handlePasswordChange}
                 />
             </>
             <Link to="/register">Tạo tài khoản mới?</Link>
