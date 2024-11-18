@@ -7,27 +7,7 @@ import { useState, useEffect } from "react";
 
 function CardChart({ content, icon, type }) {
     const [chartData, setChartData] = useState(null);
-
-    const fetchData = async (e = null) => {
-        let data = null;
-        if (e == null || e.target.value === "newUser") {
-            data = (await getNewUser()).data;
-        }
-        else if (e.target.value === "userAccept"){
-            data = (await getUserAccept()).data;
-        }
-        else if ( e.target.value === "userNoAction") {
-            data = (await getUserNoAction()).data;
-        }
-        else {
-            data = (await getUserAge()).data;
-        }
-        setChartData(data);
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
+    const [chartType, setChartType] = useState("newUser");
 
     const renderChart = () => {
         switch (type) {
@@ -42,10 +22,26 @@ function CardChart({ content, icon, type }) {
         }
     };
 
-    const handleSelectChange = async (e) => {
-        await fetchData(e); 
+    useEffect(() => {
+        const fetchData = async () => {
+            let data = null;
+            if (chartType === "newUser") {
+                data = (await getNewUser()).data;
+            }
+            else if (chartType === "userAccept"){
+                data = (await getUserAccept()).data;
+            }
+            else if (chartType === "userNoAction") {
+                data = (await getUserNoAction()).data;
+            }
+            else {
+                data = (await getUserAge()).data;
+            }
+            setChartData(data);
+        };
+        fetchData();
         renderChart();
-    };
+    }, [chartType]);
 
     return (
         <div className="card mb-4">
@@ -58,7 +54,7 @@ function CardChart({ content, icon, type }) {
             </div>
             <div className="card-footer">
                 <label className="small text-muted">Chọn thông tin muốn thống kê (12 tháng gần đây)</label>
-                <select className="form-select mt-2" onChange={e => handleSelectChange(e)}>
+                <select className="form-select mt-2" onChange={e => setChartType(e.target.value)}>
                     <option value="newUser">Lượt đăng kí tài khoản</option>
                     <option value="userAccept">Lượt truy cập lần cuối mỗi tháng</option>
                     <option value="userNoAction">Số người không hoạt động mỗi tháng</option>

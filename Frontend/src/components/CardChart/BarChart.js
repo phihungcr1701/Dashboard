@@ -40,9 +40,9 @@ const BarChart = ({ data }) => {
                     },
                     y: {
                         min: 0,
-                        max: data.max,
+                        max: data.max + Math.floor(data.max/5),
                         ticks: {
-                            maxTicksLimit: 7
+                            maxTicksLimit: data.max
                         },
                         grid: {
                             display: true

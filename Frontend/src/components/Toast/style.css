@@ -1,0 +1,45 @@
+.task-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgb(227, 248, 236);
+    padding: 20px;
+    position: relative;
+    margin: 30px auto;
+    width: 100%;
+}
+
+.task-content h3,p{
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task-content p {
+    -webkit-line-clamp: 2;
+}
+
+.task-content h3{
+    -webkit-line-clamp: 1;
+}
+
+.task-delete {
+    background-color: red;
+    border-radius: 20px;
+    border: 0;
+    padding: 5px 25px;
+    color: #fff;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.view-task {
+    border: none;
+    color: #0f5ef1;
+    background-color: rgb(227, 248, 236);
+    font-weight: 500;
+    text-decoration: none;
+}
