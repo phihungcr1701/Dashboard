@@ -1,8 +1,10 @@
-import * as request from '../utils';
+// import * as axiosInstance from '../utils';
+import { axiosInstance } from '../utils';
+
 
 const getAllUser = async (type, inputSearch = null, activeColumn = null, isSortAsc) => {
     try {
-        const users = await request.get('getInformation', {
+        const users = await axiosInstance.get('getInformation', {
             params: {
                 type: type,
                 inputSearch: inputSearch,

@@ -7,7 +7,7 @@ route.post('/register', authController.registerAccount);
 route.post('/login', authController.loginAccount);
 
 // route.put('/editAccount', authController.editAccount);
-// route.delete('/delAccount', authMiddleware.verifyToken, authController.delAccount);
+route.delete('/delAccount', authMiddleware.verifyToken, authController.delAccount);
 
 route.post('/refresh', authController.requestRefreshToken);
 route.post('/logout', authMiddleware.verifyToken, authController.logoutAccount);

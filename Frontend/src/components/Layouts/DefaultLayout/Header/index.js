@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { logoutUser } from "../../../../services/authService";
+import { useDispatch } from "react-redux";
 
 function Header() {
     const [isSidebarToggled, setIsSidebarToggled] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleClick = (event) => {
         event.preventDefault();
@@ -26,6 +30,15 @@ function Header() {
             document.body.classList.remove('sb-sidenav-toggled');
         }
     }, [isSidebarToggled]);
+
+    const handleLogoutUser = async () => {
+        try {
+            await logoutUser(dispatch, navigate);
+            console.log("hi");
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <Link className="navbar-brand ps-3" to="/">WebClient Admin</Link>
@@ -59,7 +72,7 @@ function Header() {
                             <hr className="dropdown-divider" />
                         </li>
                         <li>
-                            <Link className="dropdown-item" to="/login">Đăng xuất</Link>
+                            <Link className="dropdown-item" onClick={handleLogoutUser}>Đăng xuất</Link>
                         </li>
                     </ul>
                 </li>

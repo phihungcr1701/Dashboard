@@ -6,6 +6,7 @@ import DataTable from "../../components/DataTable/index.js";
 import { getAllUser } from "../../services/userService.js";
 
 function Table({ icon, showBreadCrumb = true }) {
+
     const [data, setData] = useState([]);
     const [input, setInput] = useState("");
     const [isSortAsc, setSortAsc] = useState(false);

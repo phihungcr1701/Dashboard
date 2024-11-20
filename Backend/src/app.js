@@ -5,12 +5,17 @@ const sequelize = require('./config/conectionDB');
 require('dotenv').config();
 const authRoute = require('./routes/authRoute');
 const informationRoute = require('./routes/informationRoute');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = process.env.PORT || 8080;
 
 publicConfig(app);
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', // Domain của client
+    credentials: true // Cho phép gửi cookies
+}));
+app.use(cookieParser());
 app.use(express.json());
 async () => await sequelize.sync();
 app.use('/api/auth', authRoute);

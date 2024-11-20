@@ -9,7 +9,7 @@ let generateAccessToken = (account) => {
             role: account.role
         },
         process.env.JWT_ACCESS_KEY,
-        { expiresIn: "60s" }
+        { expiresIn: "20s" }
     );
 }
 
@@ -24,12 +24,14 @@ let generateRefreshToken = (account, res) => {
     );
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
+        secure: false,
         path: "/",
         sameSite: "Strict"
     });
 }
 
-let requestRefreshToken = (refreshToken) => {
+let requestRefreshToken = (refreshToken, res) => {
+    let newAccessToken;
     if (!refreshToken) {
         const error = new Error();
         error.status(403);
@@ -41,10 +43,10 @@ let requestRefreshToken = (refreshToken) => {
             error.status(403);
             throw error;
         }
-        const newAccessToken = generateAccessToken(user);
+        newAccessToken = generateAccessToken(user);
         generateRefreshToken(user, res);
-        return newAccessToken;
     })
+    return newAccessToken;
 }
 
 let registerAccount = async (data) => {

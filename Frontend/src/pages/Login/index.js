@@ -10,9 +10,11 @@ function Login() {
     const [showPass, setShowPass] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isError, setIsError] = useState(false);
+    const [msgError, setMsgError] = useState("");
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const [canSubmit, setCanSubmit] = useState(false);
 
     const handleShowPass = (value) => {
         setShowPass(value);
@@ -23,18 +25,30 @@ function Login() {
     const handlePasswordChange = (value) => {
         setPassword(value);
     }
-    const handleSubmit = () => {
-        if (!email && !password) {
-            console.log("Hãy điền đầy đủ thông tin");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!email || !password) {
+            setIsError(true);
+            setMsgError("Hãy điền đầy đủ thông tin!");
+            return;
         }
         const user = { email, password };
-        loginUser(user, dispatch, navigate);
+        try {
+            setIsError(false);
+            await loginUser(user, dispatch, navigate);
+        } catch (error) {
+            console.log(error);
+            setIsError(true);
+            setMsgError("Sai tài khoản hoặc mật khẩu!");
+        }
+
     }
     return (
         <InputGroup
             title={"Đăng nhập"}
             onShowPassClick={handleShowPass}
             onSubmit={handleSubmit}
+            msgError={isError && msgError}
         >
             <>
                 <FormFloating

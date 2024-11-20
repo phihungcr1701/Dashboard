@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import './style.css';
 
-function InputGroup({ title, children, onShowPassClick, onSubmit }) {
+function InputGroup({ title, children, onShowPassClick, onSubmit, msgError }) {
     const [body, footer] = React.Children.toArray(children);
     const [showPass, setShowPass] = useState(false);
+
     const handleCheck = () => {
         let value = !showPass;
         setShowPass(value);
         onShowPassClick(value);
-    }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit();
     }
 
     return (
@@ -22,7 +19,7 @@ function InputGroup({ title, children, onShowPassClick, onSubmit }) {
             <div className='card-body px-4 py-4'>
                 <form
                     className='d-flex flex-column gap-4'
-                    onSubmit={handleSubmit}
+                    onSubmit={onSubmit}
                 >
                     {body}
                     <div className="form-check form-switch d-flex align-items-center">
@@ -34,6 +31,9 @@ function InputGroup({ title, children, onShowPassClick, onSubmit }) {
                         />
                         <label className="form-check-label mb-0 ms-3" htmlFor="showPassword">Hiển thị mật khẩu</label>
                     </div>
+                    {msgError &&
+                        <span className='text-danger small'>{msgError}</span>
+                    }
                     <div className="d-flex justify-content-center">
                         <button type='submit' className="btn btn-primary btn-lg w-100" name="submit">{title}</button>
                     </div>

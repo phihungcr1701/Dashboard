@@ -102,7 +102,7 @@ export const getUserNoAction = async () => {
             end: monthEnd
         });
     }
-    
+
     initState.forEach(user => {
         const updatedAt = new Date(user.updatedAt);
 

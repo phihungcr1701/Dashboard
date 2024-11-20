@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { adminRoute, userRoute, shareRoute } from './routes';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import DefaultLayout from './components/Layouts/DefaultLayout'
 import CenterLayout from './components/Layouts/CenterLayout';
+import { adminRoute, userRoute, shareRoute } from './routes';
 import { useSelector } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function App() {
 	const user = useSelector((state) => state.auth.login?.currentUser);
@@ -50,7 +50,10 @@ function App() {
 							<Route path="/*" element={<Navigate to="/login" />} />
 						</>
 					) : (
-						renderRoutes(roleRoute)
+						<>
+							{renderRoutes(roleRoute)}
+							<Route path="/*" element={<Navigate to="/" />} />
+						</>
 					)}
 				</Routes>
 			</div>

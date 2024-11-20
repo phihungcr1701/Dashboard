@@ -71,13 +71,14 @@ const delAccount = async (req, res) => {
 
 let requestRefreshToken = (req, res) => {
     try {
-        const newAccessToken = authService.requestRefreshToken(req.cookies.refreshToken);
+        const newAccessToken = authService.requestRefreshToken(req.cookies.refreshToken, res);
         res.status(200).json({
+            mess: "refresh Token thành công",
             accessToken: newAccessToken
         });
     } catch (error) {
-        if (error === 401) {
-            return res.status(401).json({
+        if (error === 403) {
+            return res.status(403).json({
                 mess: "refreshToken không tồn tại"
             });
         }
