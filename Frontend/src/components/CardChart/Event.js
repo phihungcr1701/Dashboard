@@ -1,19 +1,22 @@
-import axios from 'axios';
+import {getAllUser} from '../../services/userService'
 
 let initState = null;
 
 const getInformation = async () => {
-    await axios.get('https://644fc014-665a-49bf-994d-d524e5c7bd83.mock.pstmn.io/api/data')
-        .then(response => {
-            initState = response.data
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    await getAllUser("Danh sách người dùng", "", null, false)
+    .then(response => {
+        initState = response.data
+    })
+    .catch(error => {
+        console.log(error);
+    });
 }
 
 export const getNewUser = async () => {
     await getInformation();
+    if (!initState) return {
+        data: null
+    };
 
     const currentDate = new Date();
     const last12Months = [];
@@ -51,6 +54,9 @@ export const getNewUser = async () => {
 
 export const getUserAccept = async () => {
     await getInformation();
+    if (!initState) return {
+        data: null
+    };
 
     const currentDate = new Date();
     const last12Months = [];
@@ -88,6 +94,9 @@ export const getUserAccept = async () => {
 
 export const getUserNoAction = async () => {
     await getInformation();
+    if (!initState) return {
+        data: null
+    };
 
     const currentDate = new Date();
     const last12Months = [];
@@ -124,6 +133,9 @@ export const getUserNoAction = async () => {
 
 export const getUserAge = async () => {
     await getInformation();
+    if (!initState) return {
+        data: null
+    };
 
     const ageGroups = [];
     for (let i = 0; i < 90; i += 10) {

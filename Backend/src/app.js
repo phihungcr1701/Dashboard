@@ -5,6 +5,7 @@ const sequelize = require('./config/conectionDB');
 require('dotenv').config();
 const authRoute = require('./routes/authRoute');
 const informationRoute = require('./routes/informationRoute');
+const notificationRoute = require('./routes/notificationRoute')
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.json());
 async () => await sequelize.sync();
 app.use('/api/auth', authRoute);
 app.use('/api/', informationRoute);
+app.use('/api/notification', notificationRoute);
 
 app.listen(port, () => {
     console.log(`Server đang chạy tại http://localhost:${port}`);
