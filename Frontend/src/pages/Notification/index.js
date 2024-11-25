@@ -18,11 +18,11 @@ function Notification() {
                 console.log(error);
             }
         };
-    
-        fetchData();
-    }, []);   
 
-    const addToast = () => {    
+        fetchData();
+    }, []);
+
+    const addToast = () => {
         console.log(title, content);
     }
 
@@ -31,7 +31,7 @@ function Notification() {
             <BreadCrumb
                 namePage={"Thông báo"}
             />
-            {toasts.map(item => (<Toast 
+            {toasts.map(item => (<Toast
                 key={item.id}
                 id={item.id}
                 nameAdmin={item.nameAdmin}

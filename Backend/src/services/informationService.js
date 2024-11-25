@@ -5,16 +5,16 @@ let handleActiveColumn = (activeColumn) => {
     let newActiveColumn;
     switch (activeColumn) {
         case "Tên":
-            newActiveColumn = "Name";
+            newActiveColumn = "name";
             break;
-        case "Giới tính":
-            newActiveColumn = "Gender";
+        case "Email":
+            newActiveColumn = "email";
             break;
-        case "Ngày sinh":
-            newActiveColumn = "Date";
+        case "Quyền":
+            newActiveColumn = "role";
             break;
-        case "Số điện thoại":
-            newActiveColumn = "Phone";
+        case "Ngày tham gia":
+            newActiveColumn = "createdAt";
             break;
         default:
             break;
@@ -31,7 +31,6 @@ let handleWhereClause = (type) => {
             whereClause = {};
             break;
         case "Người dùng mới trong tháng":
-
             whereClause = {
                 createdAt: {
                     [Op.gte]: firstDayOfMonth
@@ -55,8 +54,6 @@ let handleWhereClause = (type) => {
 }
 
 let getInformation = async (type, inputSearch, activeColumn, isSortAsc) => {
-
-
     let sort = (isSortAsc === "true") ? true : false;
     const whereClause = inputSearch.trim() !== "" ? ({
         name: {
@@ -64,17 +61,47 @@ let getInformation = async (type, inputSearch, activeColumn, isSortAsc) => {
         }
     }) : {};
 
-    const orderClause = activeColumn ? ([[handleActiveColumn(activeColumn), sort ? "ASC" : "DESC"]]) : undefined;
+    const orderClause = activeColumn
+        ? handleActiveColumn(activeColumn) === "email" || handleActiveColumn(activeColumn) === "role"
+            ? [[{ model: db.Account }, handleActiveColumn(activeColumn), sort ? "ASC" : "DESC"]]
+            : [[handleActiveColumn(activeColumn), sort ? "ASC" : "DESC"]]
+        : undefined;
 
     try {
         const information = await db.Information.findAll({
+            include: [
+                {
+                    model: db.Account,
+                    attributes: ["email", "role"],
+                    required: true
+                }
+            ],
             where: { ...whereClause, ...handleWhereClause(type) },
             order: orderClause,
-            logging: console.log
+            // logging: console.log
         })
         return information;
     } catch (error) {
-        console.log(error);
+        throw error;
+    }
+}
+
+let getUserInformation = async (id) => {
+    try {
+        const res = await db.Information.findOne({
+            include: [
+                {
+                    model: db.Account,
+                    attributes: ["email", "role"],
+                    required: true
+                }
+            ],
+            where: {
+                accountId: id
+            },
+        })
+        return res;
+    } catch (error) {
         throw error;
     }
 }
@@ -97,13 +124,19 @@ let addInformation = async (data) => {
 }
 
 let editInformation = async (data) => {
+    const infors = {
+        name: data.nameInput,
+        gender: data.genderInput,
+        date: data.dateInput,
+        phone: data.phoneInput,
+        address: data.addressInput
+    }
     try {
-        let editInformation = await db.Information.update(data, {
-            where: { id: data.id }
+        let editInformation = await db.Information.update(infors, {
+            where: { accountId: data.id }
         });
         return editInformation;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
@@ -124,5 +157,6 @@ module.exports = {
     getInformation,
     addInformation,
     editInformation,
-    delInformation
+    delInformation,
+    getUserInformation
 }

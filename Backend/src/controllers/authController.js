@@ -43,13 +43,18 @@ let loginAccount = async (req, res) => {
 
 let editAccount = async (req, res) => {
     try {
-        let result = await authService.editAccount(req.body);
+        const data = {
+            id: req.user.id,
+            ...req.body
+        }
+        let result = await authService.editAccount(data);
         res.status(200).json({
             mess: "Đã cập nhập thành công",
             data: result
         });
     } catch (error) {
         res.status(500).json({
+            mess: "Cập nhật thất bại",
             err: error
         });
     }
@@ -58,13 +63,14 @@ let editAccount = async (req, res) => {
 
 const delAccount = async (req, res) => {
     try {
-        let delAccount = await authService.delAccount(req.query);
+        await authService.delAccount(req.query);
         res.status(200).json({
             mess: "Đã xóa thành công"
         })
     } catch (error) {
         res.status(500).json({
-            mess: error
+            mess: "Xóa thất bại",
+            err: error
         })
     }
 }

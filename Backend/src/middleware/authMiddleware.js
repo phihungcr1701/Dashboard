@@ -19,6 +19,19 @@ const verifyToken = (req, res, next) => {
     })
 }
 
+const verifyTokenAndAdmin = (req, res, next) => {
+    verifyToken(req, res, () => {
+        if (req.user.id == req.body.id || req.user.role == "admin") {
+            next();
+        } else {
+            res.status(403).json({
+                mess: "Không được phép"
+            })
+        }
+    })
+}
+
 module.exports = {
     verifyToken,
+    verifyTokenAndAdmin
 }

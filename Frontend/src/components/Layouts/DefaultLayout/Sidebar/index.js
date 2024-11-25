@@ -1,7 +1,9 @@
 import { faTachometerAlt, faColumns, faTable, faChartArea, faBell } from '@fortawesome/free-solid-svg-icons';
 import ButtonNav from "../../../ButtonNav";
+import { useSelector } from 'react-redux';
 
 function Sidebar() {
+    const id = useSelector((state) => state.auth.login?.currentUser?.data.id);
     return (
         <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div className="sb-sidenav-menu">
@@ -27,7 +29,7 @@ function Sidebar() {
                         content={"Thông báo"}
                     />
                     <ButtonNav
-                        path={"setting"}
+                        path={`setting/${id}`}
                         icon={faTable}
                         content={"Cài đặt tài khoản"}
                     />

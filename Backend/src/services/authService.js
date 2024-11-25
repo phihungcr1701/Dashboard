@@ -26,7 +26,8 @@ let generateRefreshToken = (account, res) => {
         httpOnly: true,
         secure: false,
         path: "/",
-        sameSite: "Strict"
+        sameSite: "Strict",
+        maxAge: 60 * 24 * 60 * 60 * 1000
     });
 }
 
@@ -105,26 +106,31 @@ let loginAccount = async (data, res) => {
 
 let editAccount = async (data) => {
     try {
-        let editAccount = await db.Account.update(data, {
-            where: { id: data.id }
-        });
-        return editAccount;
+        let res = await db.Account.update(
+            { password: data.newPassword },
+            {
+                where: {
+                    id: data.id,
+                    password: data.password
+                }
+            });
+        if (res[0] === 0) {
+            throw new Error();
+        }
+        return res;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
 
 let delAccount = async (data) => {
     try {
-        let delAccount = await db.Account.destroy({
+        await db.Account.destroy({
             where: {
                 id: data.id
             }
         });
-        return delAccount;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }

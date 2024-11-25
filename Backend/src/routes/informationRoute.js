@@ -4,6 +4,7 @@ const information = require('../controllers/informationController');
 const middleware = require('../middleware/authMiddleware')
 
 route.get('/getInformation', middleware.verifyToken, information.getInformation);
-route.put('/editInformation', information.editInformation);
+route.get('/getUserInfors', middleware.verifyTokenAndAdmin, information.getUserInformation);
+route.put('/editInformation', middleware.verifyTokenAndAdmin, information.editInformation);
 
 module.exports = route;

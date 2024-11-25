@@ -1,8 +1,7 @@
-// import * as axiosInstance from '../utils';
 import { axiosInstance } from '../utils';
 
 
-const getAllUser = async (type, inputSearch = null, activeColumn = null, isSortAsc) => {
+const getAllUser = async (type = "Danh sách người dùng", inputSearch = null, activeColumn = null, isSortAsc) => {
     try {
         const users = await axiosInstance.get('getInformation', {
             params: {
@@ -18,4 +17,30 @@ const getAllUser = async (type, inputSearch = null, activeColumn = null, isSortA
     }
 };
 
-export { getAllUser };
+const getUserInfors = async (id) => {
+    try {
+        const res = await axiosInstance.get("getUserInfors", {
+            params: {
+                id: id
+            }
+        })
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+const editUser = async (infors) => {
+    try {
+        const res = await axiosInstance.put("editInformation", infors);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+export {
+    getAllUser,
+    editUser,
+    getUserInfors
+};

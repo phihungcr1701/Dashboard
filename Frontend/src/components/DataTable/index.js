@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.css"
+import { faUpload, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import ModalExport from "../Modal/ModalExport";
+import ModalAddUser from "../Modal/ModalAddUser";
+import ModalWarning from "../Modal/ModalWarning";
 
-function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAscChange }) {
+function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAscChange,
+    onModalExportSubmit, onModalAddUserSubmit, onModalDeleteSubmit }) {
 
     const [isSortAsc, setSortAsc] = useState(false);
     const [activeColumn, setActiveColumn] = useState(null);
@@ -10,6 +16,21 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
     const [currentPage, setCurrentPage] = useState(1);
     const [paginationItems, setPaginationItems] = useState([]);
     const [input, setInput] = useState("");
+    const [accountId, setAccountId] = useState("");
+
+    const [showModalExport, setShowModalExport] = useState(false);
+    const [showModalAddUser, setShowModalAddUser] = useState(false);
+    const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
+
+    const formatDate = (value) => {
+        const date = new Date(value);
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = String(date.getFullYear());
+        const formattedDate = date.toLocaleDateString("vi-VN")
+        const formattedDateInForm = `${year}-${month}-${day}`;
+        return { formattedDate, formattedDateInForm };
+    }
 
     useEffect(() => {
 
@@ -69,35 +90,80 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
         onSearchChange(value);
         setCurrentPage(1);
     }
+    const handleModalExportClick = () => {
+        let value = !showModalExport;
+        setShowModalExport(value);
+    }
+    const handleModalAddUserClick = () => {
+        let value = !showModalAddUser;
+        setShowModalAddUser(value);
+    }
+    const handleDeleteClick = (id) => {
+        let value = !showModalDeleteUser;
+        setAccountId(id);
+        setShowModalDeleteUser(value);
+    }
 
     const dataCurrentPage = data.slice((currentPage - 1) * valueCheck, currentPage * valueCheck);
 
     return (
         <>
             <div className="row d-flex justify-content-between pb-3">
-                <div className="col-1">
+                <div className="col-lg-1 col-md-2">
                     <select
                         defaultValue={10}
                         className="form-select p-2"
                         onChange={(e) => handleSelectChange(e.target.value)}
                     >
-                        <option value={1}>5</option>
+                        <option value={5}>5</option>
                         <option value={10}>10</option>
                         <option value={15}>15</option>
                         <option value={20}>20</option>
                     </select>
                 </div>
-                <div className="col-3">
-                    <input
-                        value={input}
-                        className="form-control col-6"
-                        placeholder="Tìm kiếm..."
-                        onChange={(e) => handleInputChange(e.target.value)}
-                    />
+                <div className="col-lg-7 col-md-8 d-flex align-items-center justify-content-end">
+                    <div className="d-flex align-items-center justify-content-end gap-3">
+                        <div>
+                            <input
+                                value={input}
+                                className="form-control"
+                                placeholder="Tìm kiếm..."
+                                onChange={(e) => handleInputChange(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <button
+                                className="btn btn-outline-primary"
+                                onClick={handleModalExportClick}
+                            >
+                                <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon> Xuất
+                            </button>
+                        </div>
+                        <div>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleModalAddUserClick}
+                            >
+                                <FontAwesomeIcon icon={faUserPlus}></FontAwesomeIcon> Thêm người dùng
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {showModalExport && (
+                <ModalExport
+                    onCloseClick={handleModalExportClick}
+                    onSubmitClick={onModalExportSubmit}
+                />
+            )}
+            {showModalAddUser && (
+                <ModalAddUser
+                    onCloseClick={handleModalAddUserClick}
+                    onSubmitClick={onModalAddUserSubmit}
+                />
+            )}
 
-            <table id="datatablesSimple" className="table table-bordered table-hover table--fs">
+            <table className="table table-bordered table-hover table--fs">
                 <thead>
                     <tr>
                         {columnsName.map(columnName => (
@@ -122,11 +188,38 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
                     {dataCurrentPage.length > 0 ? (
                         dataCurrentPage.map((data) => (
                             <tr key={data.id}>
-                                <td>{data.id}</td>
                                 <td>{data.name}</td>
-                                <td>{data.gender}</td>
-                                <td>{data.date}</td>
-                                <td>{data.phone}</td>
+                                <td>{data.Account.email}</td>
+                                <td>{data.Account.role}</td>
+                                <td>{formatDate(data?.date).formattedDate}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button
+                                            class="btn btn-light dropdown-toggle table--fs"
+                                            type="button"
+                                            id="dropdownMenuButton"
+                                            data-bs-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                        >
+                                            Chọn
+                                        </button>
+                                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li>
+                                                <Link className="dropdown-item" to={`/setting/${data.accountId}`}>Xem</Link>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    className="dropdown-item"
+                                                    onClick={() => handleDeleteClick(data.accountId)}
+                                                >
+                                                    Xóa
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </td>
                             </tr>
                         ))
                     ) : (
@@ -170,6 +263,14 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
                     </li>
                 </ul>
             </div>
+            {showModalDeleteUser && (
+                <ModalWarning
+                    onCloseClick={handleDeleteClick}
+                    onSubmitClick={() => onModalDeleteSubmit(accountId)}
+                >
+                    {"Bạn có chắc chắn muốn xóa user này không"}
+                </ModalWarning>
+            )}
         </>
     );
 }

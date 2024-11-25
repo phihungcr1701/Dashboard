@@ -14,12 +14,12 @@ const loginUser = async (user, dispatch, navigate) => {
     }
 };
 
-const registerUser = async (user, dispatch, navigate) => {
+const registerUser = async (user, dispatch) => {
     dispatch(registerStart());
     try {
         const res = await axiosInstance.post('auth/register', user);
         dispatch(registerSuccess(res.data));
-        navigate('/login');
+        return res.data;
     } catch (error) {
         dispatch(registerFailed());
         throw error;
@@ -37,9 +37,31 @@ const logoutUser = async (dispatch, navigate) => {
         throw error;
     }
 }
+const editAccount = async (data) => {
+    try {
+        const res = await axiosInstance.put('auth/editAccount', data)
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
 
+const deleteAccount = async (id) => {
+    try {
+        const res = await axiosInstance.delete('auth/delAccount', {
+            params: {
+                id
+            }
+        });
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
 export {
     loginUser,
     registerUser,
-    logoutUser
+    logoutUser,
+    editAccount,
+    deleteAccount
 };

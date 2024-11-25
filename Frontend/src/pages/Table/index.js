@@ -4,6 +4,8 @@ import { faTable } from "@fortawesome/free-solid-svg-icons";
 import BreadCrumb from "../../components/BreadCrumb";
 import DataTable from "../../components/DataTable/index.js";
 import { getAllUser } from "../../services/userService.js";
+import { deleteAccount, registerUser } from "../../services/authService.js";
+import { useDispatch } from "react-redux";
 
 function Table({ icon, showBreadCrumb = true }) {
 
@@ -12,8 +14,9 @@ function Table({ icon, showBreadCrumb = true }) {
     const [isSortAsc, setSortAsc] = useState(false);
     const [activeColumn, setActiveColumn] = useState(null);
     const [valueCheck, setValueCheck] = useState("Danh sách người dùng");
+    const dispatch = useDispatch();
 
-    const columnsName = ["ID", "Tên", "Giới tính", "Ngày sinh", "Số điện thoại"];
+    const columnsName = ["Tên", "Email", "Quyền", "Ngày tham gia", "Hành động"];
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -25,18 +28,27 @@ function Table({ icon, showBreadCrumb = true }) {
         fetchUser();
     }, [valueCheck, input, isSortAsc, activeColumn])
 
-    const handleSearchChange = (value) => {
-        setInput(value);
+    const handleModalAddUserSubmit = async (user) => {
+        try {
+            const res = await registerUser(user, dispatch);
+            return res.mess;
+        } catch (error) {
+            throw error;
+        }
     }
-    const handleColumnActive = (nameColumn) => {
-        setActiveColumn(nameColumn);
+    const handleModalExportSubmit = () => {
+
     }
-    const handleSortAscChange = (value) => {
-        setSortAsc(value);
+
+    const handleModalDeleteSubmit = async (accountId) => {
+        try {
+            const res = await deleteAccount(accountId);
+            return res.mess;
+        } catch (error) {
+            throw error;
+        }
     }
-    const handleSelectChange = (value) => {
-        setValueCheck(value);
-    }
+
     return (
         <>
             {showBreadCrumb &&
@@ -47,7 +59,7 @@ function Table({ icon, showBreadCrumb = true }) {
                     <select
                         defaultValue={"Danh sách người dùng"}
                         className="form-select mb-4"
-                        onChange={(e) => handleSelectChange(e.target.value)}
+                        onChange={(e) => setValueCheck(e.target.value)}
                     >
                         <option value={"Danh sách người dùng"}>Danh sách người dùng</option>
                         <option value={"Người dùng mới trong tháng"}>Người dùng mới trong tháng</option>
@@ -66,9 +78,12 @@ function Table({ icon, showBreadCrumb = true }) {
                     <DataTable
                         columnsName={columnsName}
                         data={data}
-                        onSearchChange={handleSearchChange}
-                        onColumnActive={handleColumnActive}
-                        onSortAscChange={handleSortAscChange}
+                        onSearchChange={value => setInput(value)}
+                        onColumnActive={nameColumn => setActiveColumn(nameColumn)}
+                        onSortAscChange={value => setSortAsc(value)}
+                        onModalAddUserSubmit={handleModalAddUserSubmit}
+                        onModalExportSubmit={handleModalExportSubmit}
+                        onModalDeleteSubmit={handleModalDeleteSubmit}
                     />
                 </div>
             </div>

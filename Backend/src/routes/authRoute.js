@@ -6,8 +6,8 @@ const authMiddleware = require('../middleware/authMiddleware');
 route.post('/register', authController.registerAccount);
 route.post('/login', authController.loginAccount);
 
-// route.put('/editAccount', authController.editAccount);
-route.delete('/delAccount', authMiddleware.verifyToken, authController.delAccount);
+route.put('/editAccount', authMiddleware.verifyToken, authController.editAccount);
+route.delete('/delAccount', authMiddleware.verifyTokenAndAdmin, authController.delAccount);
 
 route.post('/refresh', authController.requestRefreshToken);
 route.post('/logout', authMiddleware.verifyToken, authController.logoutAccount);

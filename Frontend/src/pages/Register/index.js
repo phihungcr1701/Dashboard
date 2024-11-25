@@ -53,7 +53,8 @@ function Register() {
         const user = { name, email, password };
         try {
             setIsError(false);
-            await registerUser(user, dispatch, navigate);
+            await registerUser(user, dispatch);
+            navigate('/login');
         } catch (error) {
             setIsError(true);
             setMsgError("Đăng ký thất bại");

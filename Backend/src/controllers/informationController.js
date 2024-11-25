@@ -2,11 +2,25 @@ const informationServices = require('../services/informationService')
 
 let getInformation = async (req, res) => {
     const { type, inputSearch, activeColumn, isSortAsc } = req.query;
-    // console.log("input:", inputSearch, activeColumn, isSortAsc);
     try {
         let result = await informationServices.getInformation(type, inputSearch, activeColumn, isSortAsc);
         res.status(200).json({
             mess: "Danh sách Informations",
+            data: result
+        });
+    } catch (error) {
+        res.status(500).json({
+            err: error
+        });
+    }
+}
+
+let getUserInformation = async (req, res) => {
+    const { id } = req.query;
+    try {
+        let result = await informationServices.getUserInformation(id);
+        res.status(200).json({
+            mess: "Thông tin User",
             data: result
         });
     } catch (error) {
@@ -25,6 +39,7 @@ let editInformation = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({
+            mess: "Cập nhật thất bại",
             err: error
         });
     }
@@ -32,5 +47,6 @@ let editInformation = async (req, res) => {
 
 module.exports = {
     getInformation,
-    editInformation
+    editInformation,
+    getUserInformation
 }

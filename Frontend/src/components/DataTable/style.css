@@ -2,6 +2,11 @@
     font-size: 14px;
 }
 
+.dropdown__item--fs {
+    font-size: 14;
+
+}
+
 .datatable__Link--sort {
     text-decoration: none;
     color: #212529;

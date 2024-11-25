@@ -25,7 +25,7 @@ const Information = sequelize.define('Information', {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true
-    } 
+    }
 })
 
 module.exports = Information
