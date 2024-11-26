@@ -34,7 +34,6 @@ function Header() {
     const handleLogoutUser = async () => {
         try {
             await logoutUser(dispatch, navigate);
-            console.log("hi");
         } catch (error) {
             console.log(error);
         }

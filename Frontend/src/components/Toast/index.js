@@ -1,87 +1,125 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserGear} from '@fortawesome/free-solid-svg-icons';
+import { faUserGear } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
-import Modal from '../../components/Modal'
 import { editNotification, delNotification } from "../../services/notificationService";
 import './style.css'
+import ModalAddNotification from "../Modal/ModalAddNotification";
+import ModalWarning from '../Modal/ModalWarning'
+import ModalNotification from "../Modal/ModalNotification";
 
 const formatDate = (inputDate) => {
     const date = new Date(inputDate);
-    
+
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-    
+
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-    
+
     return `${hours}:${minutes} | ${day}/${month}/${year}`;
 };
 
 function Toast({ id, nameAuthor, title, content, date, currentRole }) {
-    const [titleChange, setTitleChange] = useState(title);
-    const [contentChange, setContentChange] = useState(content);
-    const [haveValue, setHaveValue] = useState(true);
 
-    const resetData = () => {
-        setTimeout(() => {
-            setTitleChange(title);
-            setContentChange(content);
-        }, 1000);
+    const [showModalEditNotification, setShowModalEditNotification] = useState(false);
+    const [showModalDelNotification, setShowModalDelNotification] = useState(false);
+    const [showModalNotification, setShowModalNotification] = useState(false);
+
+    // const resetData = () => {
+    //     setTimeout(() => {
+    //         setTitleChange(title);
+    //         setContentChange(content);
+    //     }, 1000);
+    // }
+    const handleToastClick = () => {
+        let value = !showModalNotification;
+        setShowModalNotification(value);
     }
-
-    const handleDelete = async (id) => {
-        await delNotification(id);
+    const handleEditClick = () => {
+        let value = !showModalEditNotification;
+        setShowModalEditNotification(value);
     }
-
-    const handleEdit = async () => {
-        if (!titleChange || !contentChange) {
-            setHaveValue(false);
-            return;
+    const handleEditSubmit = async (title, content) => {
+        try {
+            const res = await editNotification(id, title, content);
+            return res.mess;
+        } catch (error) {
+            throw error;
         }
-        await editNotification(id, titleChange, contentChange);
+    }
+    const handleDeleteClick = () => {
+        let value = !showModalDelNotification;
+        setShowModalDelNotification(value);
+    }
+    const handleDeleteSubmit = async () => {
+        try {
+            const res = await delNotification(id);
+            return res.mess;
+        } catch (error) {
+            throw error;
+        }
     }
 
     return (
         <>
             <div className="container mt-3">
                 <div className="task-card">
-                    <div className="task-content" data-bs-toggle="modal" data-bs-target={`#show${id}`}>
+                    <div
+                        className="task-content"
+                        // data-bs-toggle="modal"
+                        // data-bs-target={`#show${id}`}
+                        onClick={handleToastClick}
+                    >
                         <FontAwesomeIcon icon={faUserGear} size="2x" className="text-danger"></FontAwesomeIcon>
                         <span className="ms-xl-2 text-danger">{nameAuthor}</span>
                         <span className="badge bg bg-secondary ms-xl-2 p-2">{formatDate(date)}</span>
                         <h3 className="mt-3">{title}</h3>
                         <p className="text-muted">{content}</p>
                     </div>
+
                     {currentRole.data.role === 'admin' && (
                         <>
-                            <button className="task-edit" data-bs-toggle="modal" data-bs-target={`#edit${id}`}>Sửa</button>
-                            <button className="task-delete" onClick={() => handleDelete(id)}>Xóa</button>
+                            <button
+                                className="task-edit"
+                                onClick={handleEditClick}
+                            >
+                                Sửa
+                            </button>
+                            <button
+                                className="task-delete"
+                                onClick={() => handleDeleteClick(id)}
+                            >
+                                Xóa
+                            </button>
                         </>
                     )}
                 </div>
             </div>
-            
-            <Modal
-                id={`show${id}`}
-                title={title}
-            >
-                {content}
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-            </Modal>
 
-            <Modal
-                id={`edit${id}`}
-                title={"Cập nhật thông báo"}
-            >
-                <>
-                    <textarea className="form-control mb-4" rows="2" placeholder="Nhập tiêu đề..." onChange={e => setTitleChange(e.target.value)} value={titleChange}></textarea>
-                    <textarea className="form-control" rows="5" placeholder="Nhập nội dung..." onChange={e => setContentChange(e.target.value)} value={contentChange}></textarea>
-                    {!haveValue && <span style={{color: 'red'}}>Nhập đủ thông tin!</span>}
-                </>
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={resetData}>Đóng</button>
-                <button type="button" className="btn btn-primary" onClick={handleEdit}>Xác nhận</button>
-            </Modal>
+            {showModalNotification && (
+                <ModalNotification
+                    title={title}
+                    content={content}
+                    onCloseClick={handleToastClick}
+                />
+            )}
+            {showModalEditNotification && (
+                <ModalAddNotification
+                    onCloseClick={handleEditClick}
+                    onSubmitClick={handleEditSubmit}
+                    title={title}
+                    content={content}
+                />
+            )}
+            {showModalDelNotification && (
+                <ModalWarning
+                    onCloseClick={handleDeleteClick}
+                    onSubmitClick={handleDeleteSubmit}
+                >
+                    {"Bạn có chắc chắn muốn xóa thông báo này không"}
+                </ModalWarning>
+            )}
         </>
     );
 }

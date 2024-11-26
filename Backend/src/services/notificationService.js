@@ -4,10 +4,10 @@ let getNotification = async () => {
     try {
         const notification = await db.Notification.findAll({
             attributes: [
-                'id', 
-                'title', 
-                'content', 
-                'createdAt', 
+                'id',
+                'title',
+                'content',
+                'createdAt',
                 [db.sequelize.col('Account.Information.name'), 'nameAuthor']
             ],
             include: [
@@ -23,7 +23,7 @@ let getNotification = async () => {
                 },
             ],
         });
-        
+
         return notification;
     } catch (error) {
         console.log(error);
@@ -40,7 +40,6 @@ let addNotification = async (data) => {
         })
         return newNotification
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }

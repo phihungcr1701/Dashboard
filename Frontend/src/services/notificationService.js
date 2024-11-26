@@ -6,20 +6,20 @@ const getAllNotification = async () => {
         const users = await axiosInstance.get('notification/getNotification');
         return users.data;
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 };
 
 const addNotification = async (title, content, accountId) => {
     try {
-        const users = await axiosInstance.post('notification/addNotification', {
+        const res = await axiosInstance.post('notification/addNotification', {
             title: title,
             content: content,
             accountId: accountId,
         });
-        return users.data;
+        return res.data;
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
@@ -32,7 +32,7 @@ const editNotification = async (id, title, content) => {
         });
         return users.data;
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
@@ -43,8 +43,13 @@ const delNotification = async (id) => {
         });
         return users.data;
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
-export { getAllNotification, addNotification, editNotification, delNotification };
+export {
+    getAllNotification,
+    addNotification,
+    editNotification,
+    delNotification
+};

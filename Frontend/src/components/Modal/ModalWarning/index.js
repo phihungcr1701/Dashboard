@@ -10,6 +10,7 @@ function ModalWarning({ onCloseClick, onSubmitClick, children }) {
             setShowModalSuccess(true);
             // 
             onCloseClick();
+            console.log(res);
         } catch (error) {
             console.log(error);
         }

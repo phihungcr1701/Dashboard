@@ -3,18 +3,16 @@ import { useSelector } from "react-redux";
 import BreadCrumb from "../../components/BreadCrumb";
 import Toast from "../../components/Toast";
 import { getAllNotification, addNotification } from '../../services/notificationService';
-import Modal from '../../components/Modal'
 import './style.css'
+import ModalAddNotification from "../../components/Modal/ModalAddNotification";
 
 function Notification() {
     const currentRole = useSelector((state) => state.auth.login?.currentUser);
     const [toasts, setToasts] = useState([]);
-    const [title, setTitle] = useState();
-    const [content, setContent] = useState();
     const [valueCheck, setValueCheck] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [paginationItems, setPaginationItems] = useState([]);
-    const [haveValue, setHaveValue] = useState(true);
+    const [showModalNotification, setShowModalNotification] = useState(false);
 
     useEffect(() => {
 
@@ -64,12 +62,17 @@ function Notification() {
         fetchData();
     }, []);
 
-    const handleAddToast = async () => {
-        if (!title || !content) {
-            setHaveValue(false);
-            return;
+    const handleAddClick = () => {
+        let value = !showModalNotification;
+        setShowModalNotification(value);
+    }
+    const handleAddSubmit = async (title, content) => {
+        try {
+            const res = await addNotification(title, content, currentRole.data.id);
+            return res.mess;
+        } catch (error) {
+            throw error;
         }
-        await addNotification(title, content, currentRole.data.id);
     }
 
     const handleSelectChange = (value) => {
@@ -103,15 +106,17 @@ function Notification() {
                 </div>
             </div>
 
-            {dataCurrentPage.map(item => (<Toast
-                key={item.id}
-                id={item.id}
-                nameAuthor={item.nameAuthor}
-                title={item.title}
-                content={item.content}
-                date={item.createdAt}
-                currentRole={currentRole}
-            />))}
+            {dataCurrentPage.map(item => (
+                <Toast
+                    key={item.id}
+                    id={item.id}
+                    nameAuthor={item.nameAuthor}
+                    title={item.title}
+                    content={item.content}
+                    date={item.createdAt}
+                    currentRole={currentRole}
+                />
+            ))}
 
             <div className="row-cols-1">
                 <ul className="pagination d-flex justify-content-center">
@@ -146,19 +151,21 @@ function Notification() {
                     </li>
                 </ul>
             </div>
-            {currentRole.data.role === 'admin' && <div className="floating-circle" data-bs-toggle="modal" data-bs-target="#addToast">+</div>}
-            <Modal
-                id="addToast"
-                title="Thông báo đến các user"
-            >
-                <>
-                    <textarea className="form-control mb-4" rows="2" placeholder="Nhập tiêu đề..." onChange={e => setTitle(e.target.value)}></textarea>
-                    <textarea className="form-control" rows="5" placeholder="Nhập nội dung..." onChange={e => setContent(e.target.value)}></textarea>
-                    {!haveValue && <span style={{ color: 'red' }}>Nhập đủ thông tin!</span>}
-                </>
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" className="btn btn-primary" onClick={handleAddToast}>Xác nhận</button>
-            </Modal>
+
+            {currentRole.data.role === 'admin' && (
+                <div
+                    className="floating-circle"
+                    onClick={handleAddClick}
+                >
+                    +
+                </div>
+            )}
+            {showModalNotification && (
+                <ModalAddNotification
+                    onCloseClick={handleAddClick}
+                    onSubmitClick={handleAddSubmit}
+                />
+            )}
         </>
     );
 }
