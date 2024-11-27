@@ -15,11 +15,15 @@ const adminRoute = [
 
 ];
 const userRoute = [
-    //trien khai sau
+
 ];
 const shareRoute = [
+    // { path: '/notification', component: Notification, defaultLayout: true },
+    // { path: '/setting/:id', component: Setting, defaultLayout: true },
+];
+const publicRoute = [
     { path: '/login', component: Login, defaultLayout: false },
     { path: '/register', component: Register, defaultLayout: false }
 ];
 
-export { adminRoute, userRoute, shareRoute };
+export { adminRoute, userRoute, shareRoute, publicRoute };

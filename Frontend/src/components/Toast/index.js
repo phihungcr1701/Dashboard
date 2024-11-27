@@ -26,12 +26,6 @@ function Toast({ id, nameAuthor, title, content, date, currentRole }) {
     const [showModalDelNotification, setShowModalDelNotification] = useState(false);
     const [showModalNotification, setShowModalNotification] = useState(false);
 
-    // const resetData = () => {
-    //     setTimeout(() => {
-    //         setTitleChange(title);
-    //         setContentChange(content);
-    //     }, 1000);
-    // }
     const handleToastClick = () => {
         let value = !showModalNotification;
         setShowModalNotification(value);
@@ -67,8 +61,6 @@ function Toast({ id, nameAuthor, title, content, date, currentRole }) {
                 <div className="task-card">
                     <div
                         className="task-content"
-                        // data-bs-toggle="modal"
-                        // data-bs-target={`#show${id}`}
                         onClick={handleToastClick}
                     >
                         <FontAwesomeIcon icon={faUserGear} size="2x" className="text-danger"></FontAwesomeIcon>

@@ -5,14 +5,18 @@ import Toast from "../../components/Toast";
 import { getAllNotification, addNotification } from '../../services/notificationService';
 import './style.css'
 import ModalAddNotification from "../../components/Modal/ModalAddNotification";
+import socket from '../../services/socketService'
+
 
 function Notification() {
+
     const currentRole = useSelector((state) => state.auth.login?.currentUser);
     const [toasts, setToasts] = useState([]);
     const [valueCheck, setValueCheck] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [paginationItems, setPaginationItems] = useState([]);
     const [showModalNotification, setShowModalNotification] = useState(false);
+
 
     useEffect(() => {
 
@@ -58,9 +62,31 @@ function Notification() {
                 console.log(error);
             }
         };
-
         fetchData();
-    }, []);
+
+        socket.on('newNotification', (notification) => {
+            setToasts((prev) => [notification, ...prev]);
+        })
+        socket.on('editNotification', (record) => {
+            setToasts(prev =>
+                prev.map(notification =>
+                    notification.id === record.id ? record : notification
+                )
+            )
+        })
+        socket.on('delNotification', (id) => {
+            setToasts(prev =>
+                prev.filter(notification =>
+                    notification.id !== id
+                )
+            )
+        })
+        return () => {
+            socket.off('newNotification');
+            socket.off('editNotification');
+            socket.off('delNotification');
+        }
+    }, [])
 
     const handleAddClick = () => {
         let value = !showModalNotification;

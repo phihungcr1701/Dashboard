@@ -16,7 +16,7 @@ let getNotification = async (req, res) => {
 
 let addNotification = async (req, res) => {
     try {
-        let result = await notificationServices.addNotification(req.body);
+        let result = await notificationServices.addNotification(req.io, req.body);
         res.status(200).json({
             mess: "Đã thêm thành công",
             data: result
@@ -30,7 +30,7 @@ let addNotification = async (req, res) => {
 
 let editNotification = async (req, res) => {
     try {
-        let result = await notificationServices.editNotification(req.body);
+        let result = await notificationServices.editNotification(req.io, req.body);
         res.status(200).json({
             mess: "Đã cập nhập thành công",
             data: result
@@ -44,7 +44,7 @@ let editNotification = async (req, res) => {
 
 let delNotification = async (req, res) => {
     try {
-        let result = await notificationServices.delNotification(req.body);
+        let result = await notificationServices.delNotification(req.io, req.body);
         res.status(200).json({
             mess: "Đã xóa thành công",
             data: result

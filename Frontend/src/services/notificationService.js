@@ -1,4 +1,3 @@
-// import * as axiosInstance from '../utils';
 import { axiosInstance } from '../utils';
 
 const getAllNotification = async () => {

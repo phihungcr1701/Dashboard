@@ -31,39 +31,45 @@ let getNotification = async () => {
     }
 }
 
-let addNotification = async (data) => {
+let addNotification = async (io, data) => {
     try {
         let newNotification = await db.Notification.create({
             title: data.title,
             content: data.content,
             accountId: data.accountId
         })
+        io.emit('newNotification', newNotification);
         return newNotification
     } catch (error) {
         throw error;
     }
 }
 
-let editNotification = async (data) => {
+let editNotification = async (io, data) => {
     try {
         let editNotification = await db.Notification.update(data, {
             where: { id: data.id }
         });
+        let record = await db.Notification.findAll({
+            where: {
+                id: data.id
+            }
+        })
+        io.emit('editNotification', record[0]);
         return editNotification;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
 
-let delNotification = async (data) => {
+let delNotification = async (io, data) => {
     try {
         let delNotification = await db.Notification.destroy({
             where: { id: data.id }
         });
+        io.emit('delNotification', data.id)
         return delNotification;
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }
