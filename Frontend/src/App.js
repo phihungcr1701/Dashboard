@@ -9,17 +9,17 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function App() {
 	const user = useSelector((state) => state.auth.login?.currentUser);
-	const [roleRoute, setRoleRoute] = useState([]);
+	const [route, setRoute] = useState([]);
 
 	useEffect(() => {
 		if (user) {
-			// const specificRoute = user.data.role === "admin" ? adminRoute : userRoute;
-			// setRoleRoute([...specificRoute, ...shareRoute]);
-			setRoleRoute(user.data.role === "admin" ? adminRoute : userRoute);
+			const baseRoute = user.data.role === "admin" ? adminRoute : userRoute;
+			setRoute([...baseRoute, ...shareRoute]);
 		}
 	}, [user]);
-	const renderRoutes = (roleRoute) => {
-		return roleRoute.map((route, index) => {
+
+	const renderRoutes = (route) => {
+		return route.map((route, index) => {
 			const Page = route.component;
 			return (
 				<Route
@@ -52,8 +52,12 @@ function App() {
 						</>
 					) : (
 						<>
-							{renderRoutes(roleRoute)}
-							<Route path="/*" element={<Navigate to="/" />} />
+							{renderRoutes(route)}
+							{user.data.role === "admin" ? (
+								<Route path="/*" element={<Navigate to="/" />} />
+							) : (
+								<Route path="/*" element={<Navigate to="/notification" />} />
+							)}
 						</>
 					)}
 				</Routes>

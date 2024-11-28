@@ -10,16 +10,16 @@ const adminRoute = [
     { path: '/', component: Home, defaultLayout: true },
     { path: '/table', component: Table, defaultLayout: true },
     { path: '/chart', component: Chart, defaultLayout: true },
-    { path: '/notification', component: Notification, defaultLayout: true },
-    { path: '/setting/:id', component: Setting, defaultLayout: true },
+    // { path: '/notification', component: Notification, defaultLayout: true },
+    // { path: '/setting/:id', component: Setting, defaultLayout: true },
 
 ];
 const userRoute = [
 
 ];
 const shareRoute = [
-    // { path: '/notification', component: Notification, defaultLayout: true },
-    // { path: '/setting/:id', component: Setting, defaultLayout: true },
+    { path: '/notification', component: Notification, defaultLayout: true },
+    { path: '/setting/:id', component: Setting, defaultLayout: true },
 ];
 const publicRoute = [
     { path: '/login', component: Login, defaultLayout: false },

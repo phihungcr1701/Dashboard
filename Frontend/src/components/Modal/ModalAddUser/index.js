@@ -35,7 +35,7 @@ function ModalAddUser({ onSubmitClick, onCloseClick }) {
                 onSubmitClick={handleSubmit}
             >
                 <div>
-                    <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                    <label for="name" className="form-label">Họ và tên <span className="text-danger">*</span></label>
                     <input
                         type="text"
                         className="form-control"
@@ -46,7 +46,7 @@ function ModalAddUser({ onSubmitClick, onCloseClick }) {
                     />
                 </div>
                 <div>
-                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                    <label for="email" className="form-label">Email <span className="text-danger">*</span></label>
                     <input
                         type="email"
                         className="form-control"
@@ -58,7 +58,7 @@ function ModalAddUser({ onSubmitClick, onCloseClick }) {
                 </div>
 
                 <div>
-                    <label for="role" class="form-label">Quyền</label>
+                    <label for="role" className="form-label">Quyền</label>
                     <div className="form-check">
                         <input
                             type="radio"
@@ -96,7 +96,7 @@ function ModalAddUser({ onSubmitClick, onCloseClick }) {
                 </div>
 
                 <div>
-                    <label htmlFor="pass" className="form-label">Mật khẩu <span class="text-danger">*</span></label>
+                    <label htmlFor="pass" className="form-label">Mật khẩu <span className="text-danger">*</span></label>
                     <input
                         type="password"
                         className="form-control"

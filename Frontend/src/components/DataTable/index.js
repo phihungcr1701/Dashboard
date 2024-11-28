@@ -112,6 +112,7 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
                 <div className="col-lg-1 col-md-2">
                     <select
                         defaultValue={10}
+                        name="itemShow"
                         className="form-select p-2"
                         onChange={(e) => handleSelectChange(e.target.value)}
                     >
@@ -126,6 +127,7 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
                         <div>
                             <input
                                 value={input}
+                                name="search"
                                 className="form-control"
                                 placeholder="Tìm kiếm..."
                                 onChange={(e) => handleInputChange(e.target.value)}
@@ -193,9 +195,9 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
                                 <td>{data.Account.role}</td>
                                 <td>{formatDate(data?.date).formattedDate}</td>
                                 <td>
-                                    <div class="dropdown">
+                                    <div className="dropdown">
                                         <button
-                                            class="btn btn-light dropdown-toggle table--fs"
+                                            className="btn btn-light dropdown-toggle table--fs"
                                             type="button"
                                             id="dropdownMenuButton"
                                             data-bs-toggle="dropdown"
