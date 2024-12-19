@@ -193,7 +193,7 @@ function DataTable({ columnsName, data, onSearchChange, onColumnActive, onSortAs
                                 <td>{data.name}</td>
                                 <td>{data.Account.email}</td>
                                 <td>{data.Account.role}</td>
-                                <td>{formatDate(data?.date).formattedDate}</td>
+                                <td>{formatDate(data?.createdAt).formattedDate}</td>
                                 <td>
                                     <div className="dropdown">
                                         <button

@@ -129,7 +129,7 @@ function Seeting() {
                             <div className="info-row">
                                 <FontAwesomeIcon icon={faCalendarCheck} className="info-icon" />
                                 <span className="info-label">Ngày tham gia:</span>
-                                <label className="label">{formatDate(data?.date).formattedDate}</label>
+                                <label className="label">{formatDate(data?.createdAt).formattedDate}</label>
                             </div>
                         </div>
                     </div>
