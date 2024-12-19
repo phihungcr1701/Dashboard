@@ -3,7 +3,7 @@ import ButtonNav from "../../../ButtonNav";
 import { useSelector } from 'react-redux';
 
 function Sidebar() {
-    const id = useSelector((state) => state.auth.login?.currentUser?.data.id);
+    const user = useSelector((state) => state.auth.login?.currentUser?.data);
     return (
         <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div className="sb-sidenav-menu">
@@ -29,17 +29,15 @@ function Sidebar() {
                         content={"Thông báo"}
                     />
                     <ButtonNav
-                        path={`setting/${id}`}
+                        path={`setting/${user.id}`}
                         icon={faTable}
                         content={"Cài đặt tài khoản"}
                     />
-
-
                 </div>
             </div>
             <div className="sb-sidenav-footer">
                 <div className="small">Logged in as:</div>
-                Admin
+                {user.email}
             </div>
         </nav>
     );

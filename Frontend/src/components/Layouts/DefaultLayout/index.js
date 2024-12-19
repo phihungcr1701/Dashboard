@@ -4,7 +4,7 @@ import './style.css';
 
 function DefaultLayout({ children }) {
     return (
-        <div>
+        <div className="sb-nav-fixed">
             <Header />
             <div id="layoutSidenav">
                 <div id="layoutSidenav_nav">
