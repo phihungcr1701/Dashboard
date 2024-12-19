@@ -4,8 +4,20 @@ import Card from "../../components/Card";
 import CardChart from "../../components/CardChart";
 import Table from "../Table";
 import BreadCrumb from "../../components/BreadCrumb";
+import { useEffect, useState } from "react";
+import { getCount } from "../../services/userService";
 
 function Home() {
+    const [data, setData] = useState();
+    useEffect(() => {
+        const fetchCount = async () => {
+            const res = await getCount();
+            if (res && res.data) {
+                setData(res.data);
+            }
+        };
+        fetchCount();
+    }, [])
     return (
         <>
             <BreadCrumb
@@ -18,14 +30,14 @@ function Home() {
                     background={"primary"}
                     icon={faUsers}
                     content={"Tổng số người dùng"}
-                    count={30}
+                    count={data?.totalUsers}
                 />
 
                 <Card
                     background={"warning"}
                     icon={faUserPlus}
                     content={"Người dùng mới trong tháng"}
-                    count={30}
+                    count={data?.newUsersMonth}
                 />
 
                 <Card
@@ -39,7 +51,7 @@ function Home() {
                     background={"success"}
                     icon={faChartLine}
                     content={"Lượt truy cập trong tháng"}
-                    count={30}
+                    count={data?.monthlyVisits}
                 />
             </div>
 

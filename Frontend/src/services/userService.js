@@ -38,9 +38,19 @@ const editUser = async (infors) => {
     }
 }
 
+const getCount = async () => {
+    try {
+        const res = await axiosInstance.get("getCount");
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 export {
     getAllUser,
     editUser,
-    getUserInfors
+    getUserInfors,
+    getCount
 };

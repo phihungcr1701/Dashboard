@@ -25,6 +25,19 @@ let getInformation = async (req, res) => {
         });
     }
 }
+let getCount = async (req, res) => {
+    try {
+        let result = await informationServices.getCount();
+        res.status(200).json({
+            mess: "Count",
+            data: result
+        });
+    } catch (error) {
+        res.status(500).json({
+            err: error
+        });
+    }
+}
 
 let getUserInformation = async (req, res) => {
     const { id } = req.query;
@@ -94,5 +107,6 @@ module.exports = {
     getInformation,
     editInformation,
     getUserInformation,
-    dowloadExcel
+    dowloadExcel,
+    getCount
 }

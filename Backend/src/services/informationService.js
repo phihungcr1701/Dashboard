@@ -86,6 +86,49 @@ let getInformation = async (type, inputSearch, activeColumn, isSortAsc) => {
     }
 }
 
+let getCount = async () => {
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
+
+    try {
+        const totalUsers = await db.Information.count();
+
+        const newUsersMonth = await db.Information.count({
+            where: {
+                createdAt: {
+                    [Op.gte]: firstDayOfMonth
+                }
+            }
+        });
+
+        const inactiveUsers = await db.Information.count({
+            where: {
+                updatedAt: {
+                    [Op.lt]: firstDayOfMonth
+                }
+            }
+        });
+
+        const monthlyVisits = await db.Information.count({
+            where: {
+                updatedAt: {
+                    [Op.gte]: firstDayOfMonth
+                }
+            }
+        });
+
+        return {
+            totalUsers,
+            newUsersMonth,
+            inactiveUsers,
+            monthlyVisits
+        };
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 let getUserInformation = async (id) => {
     try {
         const res = await db.Information.findOne({
@@ -159,4 +202,5 @@ module.exports = {
     editInformation,
     delInformation,
     getUserInformation,
+    getCount
 }
