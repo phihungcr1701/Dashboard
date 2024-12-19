@@ -28,7 +28,7 @@ function CardChart({ content, icon, type }) {
             if (chartType === "newUser") {
                 data = (await getNewUser()).data;
             }
-            else if (chartType === "userAccept"){
+            else if (chartType === "userAccept") {
                 data = (await getUserAccept()).data;
             }
             else if (chartType === "userNoAction") {
@@ -53,13 +53,21 @@ function CardChart({ content, icon, type }) {
                 {chartData ? renderChart() : <div className="spinner-border text-primary"></div>}
             </div>
             <div className="card-footer">
-                <label className="small text-muted">Chọn thông tin muốn thống kê (12 tháng gần đây)</label>
-                <select className="form-select mt-2" onChange={e => setChartType(e.target.value)}>
-                    <option value="newUser">Lượt đăng kí tài khoản</option>
-                    <option value="userAccept">Lượt truy cập lần cuối mỗi tháng</option>
-                    <option value="userNoAction">Số người không hoạt động mỗi tháng</option>
-                    <option value="userAge">Phân bố độ tuổi hoạt động</option>
-                </select>
+                <label
+                    className="small text-muted"
+                >
+                    Chọn thông tin muốn thống kê (12 tháng gần đây)
+                    <select
+                        className="form-select mt-2"
+                        name="chart"
+                        onChange={e => setChartType(e.target.value)}
+                    >
+                        <option value="newUser">Lượt đăng kí tài khoản</option>
+                        <option value="userAccept">Lượt truy cập lần cuối mỗi tháng</option>
+                        <option value="userNoAction">Số người không hoạt động mỗi tháng</option>
+                        <option value="userAge">Phân bố độ tuổi hoạt động</option>
+                    </select>
+                </label>
             </div>
         </div>
     );

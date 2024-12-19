@@ -31,7 +31,7 @@ function ModalEditUser({ onSubmitClick, onCloseClick, name, valueGender, date, p
             onSubmitClick={handleSubmit}
         >
             <div>
-                <label htmlfor="name" class="form-label">Họ và tên</label>
+                <label htmlfor="name" className="form-label">Họ và tên</label>
                 <input
                     type="text"
                     className="form-control"
@@ -43,7 +43,7 @@ function ModalEditUser({ onSubmitClick, onCloseClick, name, valueGender, date, p
             </div>
 
             <div>
-                <label for="gender" class="form-label">Giới tính</label>
+                <label for="gender" className="form-label">Giới tính</label>
                 <div className="form-check">
                     <input
                         type="radio"
@@ -80,7 +80,7 @@ function ModalEditUser({ onSubmitClick, onCloseClick, name, valueGender, date, p
                 </div>
             </div>
             <div>
-                <label for="date" class="form-label">Ngày sinh</label>
+                <label for="date" className="form-label">Ngày sinh</label>
                 <input
                     type="date"
                     className="form-control"
@@ -91,7 +91,7 @@ function ModalEditUser({ onSubmitClick, onCloseClick, name, valueGender, date, p
                 />
             </div>
             <div>
-                <label htmlFor="phone" class="form-label">Số điện thoại</label>
+                <label htmlFor="phone" className="form-label">Số điện thoại</label>
                 <input
                     type="number"
                     className="form-control"
@@ -102,7 +102,7 @@ function ModalEditUser({ onSubmitClick, onCloseClick, name, valueGender, date, p
                 />
             </div>
             <div>
-                <label htmlFor="address" class="form-label">Địa chỉ</label>
+                <label htmlFor="address" className="form-label">Địa chỉ</label>
                 <input
                     type="text"
                     className="form-control"

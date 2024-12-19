@@ -6,6 +6,7 @@ import DataTable from "../../components/DataTable/index.js";
 import { getAllUser } from "../../services/userService.js";
 import { deleteAccount, registerUser } from "../../services/authService.js";
 import { useDispatch } from "react-redux";
+import dowloadExcel from "../../services/dowloadExcel.js";
 
 function Table({ icon, showBreadCrumb = true }) {
 
@@ -36,8 +37,16 @@ function Table({ icon, showBreadCrumb = true }) {
             throw error;
         }
     }
-    const handleModalExportSubmit = () => {
-
+    const handleModalExportSubmit = async (valueExport) => {
+        try {
+            if (valueExport === "filter") {
+                await dowloadExcel(valueCheck, input, activeColumn, isSortAsc);
+            } else {
+                await dowloadExcel();
+            }
+        } catch (error) {
+            throw error;
+        }
     }
 
     const handleModalDeleteSubmit = async (accountId) => {

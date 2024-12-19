@@ -38,7 +38,7 @@ function ModalPassword({ onSubmitClick, onCloseClick }) {
                 onSubmitClick={handleSubmit}
             >
                 <div>
-                    <label for="password" class="form-label">Nhập mật khẩu cũ <span class="text-danger">*</span></label>
+                    <label for="password" className="form-label">Nhập mật khẩu cũ <span className="text-danger">*</span></label>
                     <input
                         type="password"
                         className="form-control"
@@ -49,7 +49,7 @@ function ModalPassword({ onSubmitClick, onCloseClick }) {
                     />
                 </div>
                 <div>
-                    <label for="password" class="form-label">Nhập mật khẩu mới <span class="text-danger">*</span></label>
+                    <label for="password" className="form-label">Nhập mật khẩu mới <span className="text-danger">*</span></label>
                     <input
                         type="password"
                         className="form-control"
@@ -60,7 +60,7 @@ function ModalPassword({ onSubmitClick, onCloseClick }) {
                     />
                 </div>
                 <div>
-                    <label for="password" class="form-label">Nhập lại mật khẩu <span class="text-danger">*</span></label>
+                    <label for="password" className="form-label">Nhập lại mật khẩu <span className="text-danger">*</span></label>
                     <input
                         type="password"
                         className="form-control"

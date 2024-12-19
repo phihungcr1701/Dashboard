@@ -21,7 +21,7 @@ const verifyToken = (req, res, next) => {
 
 const verifyTokenAndAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
-        if (req.user.id == req.body.id || req.user.role == "admin") {
+        if (req.user.id == req.query.id || req.body.id || req.user.role == "admin") {
             next();
         } else {
             res.status(403).json({

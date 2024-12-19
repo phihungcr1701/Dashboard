@@ -158,5 +158,5 @@ module.exports = {
     addInformation,
     editInformation,
     delInformation,
-    getUserInformation
+    getUserInformation,
 }

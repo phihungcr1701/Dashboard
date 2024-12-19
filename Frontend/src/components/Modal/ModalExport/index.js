@@ -3,29 +3,39 @@ import Modal from "..";
 
 function ModalExport({ onSubmitClick, onCloseClick }) {
 
-    const [valueSelect, setValueSelect] = useState("All");
+    const [valueSelect, setValueSelect] = useState("filter");
+    const [showModalSuccess, setShowModalSuccess] = useState(false);
 
-    const handleSelectChange = (value) => {
-        console.log(value);
-        setValueSelect(value);
+    const handleSubmitClick = async () => {
+        try {
+            await onSubmitClick(valueSelect);
+            setShowModalSuccess(true);
+            onCloseClick();
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
-        <Modal
-            title={"Xuất User"}
-            onCloseClick={onCloseClick}
-            onSubmitClick={onSubmitClick}
-        >
-            <label className="label">Chọn quyền:</label>
-            <select
-                defaultValue={"All"}
-                className="form-select p-2"
-                onChange={(e) => handleSelectChange(e.target.value)}
+        <>
+            <Modal
+                title={"Xuất thông tin"}
+                onCloseClick={onCloseClick}
+                onSubmitClick={handleSubmitClick}
             >
-                <option value={"Admin"}>Admin</option>
-                <option value={"User"}>User</option>
-                <option value={"All"}>All</option>
-            </select>
-        </Modal>
+                <label className="label">Lựa chọn:</label>
+                <select
+                    defaultValue={"filter"}
+                    className="form-select p-2"
+                    onChange={(e) => setValueSelect(e.target.value)}
+                >
+                    <option value={"filter"}>Xuất các bản ghi đã lọc</option>
+                    <option value={"all"}>Xuất tất cả bản ghi</option>
+                </select>
+            </Modal>
+            {/* {showModalSuccess && (
+
+        )} */}
+        </>
     );
 }
 export default ModalExport;

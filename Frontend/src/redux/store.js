@@ -14,13 +14,13 @@ const store = configureStore({
     reducer: {
         auth: persistedReducer, // Sử dụng persisted reducer cho auth
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'], // Bỏ qua kiểm tra tuần tự hóa cho các hành động redux-persist
+            },
+        }),
 });
 export const persistor = persistStore(store);
-
-// const store = configureStore({
-//     reducer: {
-//         auth: authSlice.reducer,
-//     }
-// });
 
 export default store;
