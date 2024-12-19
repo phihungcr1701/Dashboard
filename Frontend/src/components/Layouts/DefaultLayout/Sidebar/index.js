@@ -8,21 +8,25 @@ function Sidebar() {
         <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div className="sb-sidenav-menu">
                 <div className="nav">
-                    <ButtonNav
-                        path={""}
-                        icon={faTachometerAlt}
-                        content={"Trang chủ"}
-                    />
-                    <ButtonNav
-                        path={"table"}
-                        icon={faColumns}
-                        content={"Quản lý người dùng"}
-                    />
-                    <ButtonNav
-                        path={"chart"}
-                        icon={faChartArea}
-                        content={"Thống kê"}
-                    />
+                    {user?.role === "admin" &&
+                        <div>
+                            <ButtonNav
+                                path={""}
+                                icon={faTachometerAlt}
+                                content={"Trang chủ"}
+                            />
+                            <ButtonNav
+                                path={"table"}
+                                icon={faColumns}
+                                content={"Quản lý người dùng"}
+                            />
+                            <ButtonNav
+                                path={"chart"}
+                                icon={faChartArea}
+                                content={"Thống kê"}
+                            />
+                        </div>
+                    }
                     <ButtonNav
                         path={"notification"}
                         icon={faBell}
