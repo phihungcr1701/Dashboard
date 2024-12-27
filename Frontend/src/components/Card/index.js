@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
-function Card({ background, icon, content, count }) {
+function Card({ background, icon, content, count, typePath }) {
 
     return (
         <div className="col-xl-3 col-md-6">
@@ -15,7 +15,7 @@ function Card({ background, icon, content, count }) {
                     {content}
                 </div>
                 <div className="card-footer d-flex align-items-center justify-content-between">
-                    <Link className="small text-white stretched-link" to={"/table"}>Xem chi tiết</Link >
+                    <Link className="small text-white stretched-link" to={`/table/${typePath}`}>Xem chi tiết</Link >
                     <div className="small text-white">
                         <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
                     </div>

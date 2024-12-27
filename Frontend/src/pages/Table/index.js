@@ -7,14 +7,28 @@ import { getAllUser } from "../../services/userService.js";
 import { deleteAccount, registerUser } from "../../services/authService.js";
 import { useDispatch } from "react-redux";
 import dowloadExcel from "../../services/dowloadExcel.js";
+import { useParams } from "react-router-dom";
+
 
 function Table({ icon, showBreadCrumb = true }) {
+
+    const typePath = useParams().type;
+    let initialValueCheck = null;
+    if (typePath === "totalUsers") {
+        initialValueCheck = "Danh sách người dùng";
+    } else if (typePath === "newUsersMonth") {
+        initialValueCheck = "Người dùng mới trong tháng";
+    } else if (typePath === "userOffMonth") {
+        initialValueCheck = "Người dùng không hoạt động";
+    } else {
+        initialValueCheck = "Lượt truy cập trong tháng";
+    }
 
     const [data, setData] = useState([]);
     const [input, setInput] = useState("");
     const [isSortAsc, setSortAsc] = useState(false);
     const [activeColumn, setActiveColumn] = useState(null);
-    const [valueCheck, setValueCheck] = useState("Danh sách người dùng");
+    const [valueCheck, setValueCheck] = useState(initialValueCheck);
     const dispatch = useDispatch();
 
     const columnsName = ["Tên", "Email", "Quyền", "Ngày tham gia", "Hành động"];
@@ -66,13 +80,13 @@ function Table({ icon, showBreadCrumb = true }) {
                         namePage={"Quản lý người dùng"}
                     />
                     <select
-                        defaultValue={"Danh sách người dùng"}
+                        defaultValue={valueCheck}
                         className="form-select mb-4"
                         onChange={(e) => setValueCheck(e.target.value)}
                     >
                         <option value={"Danh sách người dùng"}>Danh sách người dùng</option>
                         <option value={"Người dùng mới trong tháng"}>Người dùng mới trong tháng</option>
-                        <option value={"Người dùng không hoạt động"}>Người dùng không hoạt động</option>
+                        <option value={"Người dùng không hoạt động"}>Người dùng không hoạt động trong tháng</option>
                         <option value={"Lượt truy cập trong tháng"}>Lượt truy cập trong tháng</option>
                     </select>
                 </>

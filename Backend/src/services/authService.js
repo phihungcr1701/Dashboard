@@ -94,6 +94,21 @@ let loginAccount = async (data, res) => {
         } else {
             accessToken = generateAccessToken(account);
             generateRefreshToken(account, res);
+            try {
+                await db.Information.update(
+                    {
+                        //cap nhat mot truong bat ky de updatedAt duoc cap nhat
+                        accountId: account.id
+                    },
+                    {
+                        where: {
+                            accountId: account.id
+                        }
+                    }
+                );
+            } catch (error) {
+                throw error;
+            }
         }
         const { password, ...others } = account.toJSON();
         return { ...others, accessToken };

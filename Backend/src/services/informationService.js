@@ -38,7 +38,11 @@ let handleWhereClause = (type) => {
             };
             break;
         case "Người dùng không hoạt động":
-            //
+            whereClause = {
+                updatedAt: {
+                    [Op.lt]: firstDayOfMonth
+                }
+            };
             break;
         case "Lượt truy cập trong tháng":
             whereClause = {
@@ -101,7 +105,7 @@ let getCount = async () => {
             }
         });
 
-        const inactiveUsers = await db.Information.count({
+        const userOffMonth = await db.Information.count({
             where: {
                 updatedAt: {
                     [Op.lt]: firstDayOfMonth
@@ -120,7 +124,7 @@ let getCount = async () => {
         return {
             totalUsers,
             newUsersMonth,
-            inactiveUsers,
+            userOffMonth,
             monthlyVisits
         };
     } catch (error) {

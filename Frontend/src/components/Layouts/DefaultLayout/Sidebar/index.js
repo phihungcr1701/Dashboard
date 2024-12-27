@@ -16,7 +16,7 @@ function Sidebar() {
                                 content={"Trang chủ"}
                             />
                             <ButtonNav
-                                path={"table"}
+                                path={`table/${"totalUsers"}`}
                                 icon={faColumns}
                                 content={"Quản lý người dùng"}
                             />

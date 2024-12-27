@@ -31,6 +31,7 @@ function Home() {
                     icon={faUsers}
                     content={"Tổng số người dùng"}
                     count={data?.totalUsers}
+                    typePath={"totalUsers"}
                 />
 
                 <Card
@@ -38,13 +39,15 @@ function Home() {
                     icon={faUserPlus}
                     content={"Người dùng mới trong tháng"}
                     count={data?.newUsersMonth}
+                    typePath={"newUsersMonth"}
                 />
 
                 <Card
                     background={"danger"}
                     icon={faExclamationTriangle}
-                    content={"Người dùng không hoạt động"}
-                    count={30}
+                    content={"Người dùng không hoạt động trong tháng"}
+                    count={data?.userOffMonth}
+                    typePath={"userOffMonth"}
                 />
 
                 <Card
@@ -52,6 +55,7 @@ function Home() {
                     icon={faChartLine}
                     content={"Lượt truy cập trong tháng"}
                     count={data?.monthlyVisits}
+                    typePath={"monthlyVisits"}
                 />
             </div>
 
