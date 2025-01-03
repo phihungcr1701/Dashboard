@@ -1,31 +1,32 @@
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "..";
 
-function ModalError({ onCloseClick, children }) {
+function ModalSuccess({ onCloseClick }) {
     return (
         <>
+            {/* Overlay riêng cho ModalSuccess */}
             <div className="modal-overlay"></div>
             <Modal
                 title={
                     <span className="d-flex align-items-center gap-2">
-                        <FontAwesomeIcon icon={faTimesCircle} className="text-danger" />
-                        Lỗi
+                        <FontAwesomeIcon icon={faCheckCircle} className="text-success" />
+                        Thành Công
                     </span>
                 }
-                className="modal-error"
+                className="modal-success"
                 footerContent={
                     <button type="button" className="btn btn-danger" onClick={onCloseClick}>
                         Đóng
                     </button>
                 }
             >
-                <div className="text-danger text-center">
-                    {children || "Đã xảy ra lỗi. Vui lòng thử lại!"}
+                <div className="text-success text-center">
+                    <p>Thao tác đã thực hiện thành công!</p>
                 </div>
             </Modal>
         </>
     );
 }
 
-export default ModalError;
+export default ModalSuccess;

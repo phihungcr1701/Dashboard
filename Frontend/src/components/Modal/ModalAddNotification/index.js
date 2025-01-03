@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Modal from "..";
+import ModalError from "../ModalError";
+import ModalSuccess from "../ModalSuccess";
 
 function ModalAddNotification({ onSubmitClick, onCloseClick, title, content }) {
     const [titleInput, setTitleInput] = useState(title);
@@ -13,12 +15,8 @@ function ModalAddNotification({ onSubmitClick, onCloseClick, title, content }) {
             return;
         }
         try {
-            const res = await onSubmitClick(titleInput, contentInput);
+            await onSubmitClick(titleInput, contentInput);
             setShowModalSuccess(true);
-
-            onCloseClick();
-            console.log(res);
-
         } catch (error) {
             setShowModalError(true);
             console.log(error);
@@ -28,8 +26,16 @@ function ModalAddNotification({ onSubmitClick, onCloseClick, title, content }) {
         <>
             <Modal
                 title={"Thông báo đến các user"}
-                onCloseClick={onCloseClick}
-                onSubmitClick={handleSubmit}
+                footerContent={
+                    <>
+                        <button type="button" className="btn btn-danger" onClick={onCloseClick}>
+                            Đóng
+                        </button>
+                        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                            Xác nhận
+                        </button>
+                    </>
+                }
             >
                 <textarea
                     className="form-control mb-4"
@@ -48,12 +54,19 @@ function ModalAddNotification({ onSubmitClick, onCloseClick, title, content }) {
                 </textarea>
 
             </Modal>
-            {/* {showModalError && (
-            
-            )} */}
-            {/* {showModalSuccess && (
-
-            )} */}
+            {showModalError && (
+                <ModalError onCloseClick={() => setShowModalError(false)}>
+                    {"Hãy nhập đầy đủ tiêu đề và nội dung!"}
+                </ModalError>
+            )}
+            {showModalSuccess && (
+                <ModalSuccess
+                    onCloseClick={() => {
+                        setShowModalSuccess(false)
+                        onCloseClick()
+                    }}
+                />
+            )}
         </>
     );
 }

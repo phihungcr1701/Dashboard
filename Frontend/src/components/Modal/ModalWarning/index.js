@@ -1,5 +1,6 @@
-import Modal from "..";
 import { useState } from "react";
+import Modal from "..";
+import ModalSuccess from "../ModalSuccess";
 
 function ModalWarning({ onCloseClick, onSubmitClick, children }) {
 
@@ -8,21 +9,38 @@ function ModalWarning({ onCloseClick, onSubmitClick, children }) {
         try {
             const res = await onSubmitClick();
             setShowModalSuccess(true);
-            // 
-            onCloseClick();
             console.log(res);
         } catch (error) {
             console.log(error);
         }
     }
     return (
-        <Modal
-            title={"Cảnh báo"}
-            onCloseClick={onCloseClick}
-            onSubmitClick={handleSubmit}
-        >
-            {children}
-        </Modal>
+        <>
+            <Modal
+                title={"Cảnh báo"}
+                footerContent={
+                    <>
+                        <button type="button" className="btn btn-danger" onClick={onCloseClick}>
+                            Đóng
+                        </button>
+                        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                            Xác nhận
+                        </button>
+                    </>
+                }
+                className="modal-warning"
+            >
+                {children}
+            </Modal>
+            {showModalSuccess && (
+                <ModalSuccess
+                    onCloseClick={() => {
+                        setShowModalSuccess(false)
+                        onCloseClick()
+                    }}
+                />
+            )}
+        </>
     );
 }
 export default ModalWarning;

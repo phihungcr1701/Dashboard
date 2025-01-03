@@ -6,7 +6,11 @@ function ModalNotification({ title, content, onCloseClick }) {
         <>
             <Modal
                 title={title}
-                onCloseClick={onCloseClick}
+                footerContent={
+                    <button type="button" className="btn btn-danger" onClick={onCloseClick}>
+                        Đóng
+                    </button>
+                }
             >
                 <textarea
                     className="form-control"

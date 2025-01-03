@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "..";
+import ModalSuccess from "../ModalSuccess";
 
 function ModalExport({ onSubmitClick, onCloseClick }) {
 
@@ -10,7 +11,6 @@ function ModalExport({ onSubmitClick, onCloseClick }) {
         try {
             await onSubmitClick(valueSelect);
             setShowModalSuccess(true);
-            onCloseClick();
         } catch (error) {
             console.log(error);
         }
@@ -19,8 +19,16 @@ function ModalExport({ onSubmitClick, onCloseClick }) {
         <>
             <Modal
                 title={"Xuất thông tin"}
-                onCloseClick={onCloseClick}
-                onSubmitClick={handleSubmitClick}
+                footerContent={
+                    <>
+                        <button type="button" className="btn btn-danger" onClick={onCloseClick}>
+                            Đóng
+                        </button>
+                        <button type="submit" className="btn btn-primary" onClick={handleSubmitClick}>
+                            Xác nhận
+                        </button>
+                    </>
+                }
             >
                 <label className="label">Lựa chọn:</label>
                 <select
@@ -32,9 +40,14 @@ function ModalExport({ onSubmitClick, onCloseClick }) {
                     <option value={"all"}>Xuất tất cả bản ghi</option>
                 </select>
             </Modal>
-            {/* {showModalSuccess && (
-
-        )} */}
+            {showModalSuccess && (
+                <ModalSuccess
+                    onCloseClick={() => {
+                        setShowModalSuccess(false)
+                        onCloseClick();
+                    }}
+                />
+            )}
         </>
     );
 }

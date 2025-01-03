@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal from "..";
 import ModalError from "../ModalError";
+import ModalSuccess from "../ModalSuccess";
 
 function ModalPassword({ onSubmitClick, onCloseClick }) {
 
@@ -9,21 +10,20 @@ function ModalPassword({ onSubmitClick, onCloseClick }) {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showModalError, setShowModalError] = useState(false);
     const [showModalSuccess, setShowModalSuccess] = useState(false);
+    const [contentModalError, setContentModalError] = useState("Hãy nhập đầy đủ các trường!");
 
     const handleSubmit = async () => {
         if (newPassword !== confirmPassword) {
-            ///
+            setContentModalError("Mật khẩu không trùng khớp");
             setShowModalError(true);
             return;
         }
         try {
             const data = { password, newPassword };
-            const res = await onSubmitClick(data);
+            await onSubmitClick(data);
             setShowModalSuccess(true);
-            // 
-            console.log(res);
-            onCloseClick();
         } catch (error) {
+            setContentModalError("Thay đổi mật khẩu không thành công");
             setShowModalError(true);
             console.log(error);
         }
@@ -34,8 +34,16 @@ function ModalPassword({ onSubmitClick, onCloseClick }) {
         <>
             <Modal
                 title={"Thay đổi mật khẩu"}
-                onCloseClick={onCloseClick}
-                onSubmitClick={handleSubmit}
+                footerContent={
+                    <>
+                        <button type="button" className="btn btn-danger" onClick={onCloseClick}>
+                            Đóng
+                        </button>
+                        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                            Xác nhận
+                        </button>
+                    </>
+                }
             >
                 <div>
                     <label for="password" className="form-label">Nhập mật khẩu cũ <span className="text-danger">*</span></label>
@@ -71,9 +79,19 @@ function ModalPassword({ onSubmitClick, onCloseClick }) {
                     />
                 </div>
             </Modal>
-            {/* {showModalError && (
-                <ModalError />
-            )} */}
+            {showModalError && (
+                <ModalError onCloseClick={() => setShowModalError(false)}>
+                    {contentModalError}
+                </ModalError>
+            )}
+            {showModalSuccess && (
+                <ModalSuccess
+                    onCloseClick={() => {
+                        setShowModalSuccess(false)
+                        onCloseClick();
+                    }}
+                />
+            )}
         </>
     );
 }

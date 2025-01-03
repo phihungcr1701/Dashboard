@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Modal from "..";
+import ModalError from "../ModalError";
+import ModalSuccess from "../ModalSuccess";
 
 function ModalEditUser({ onSubmitClick, onCloseClick, name, valueGender, date, phone, address }) {
 
@@ -17,7 +19,7 @@ function ModalEditUser({ onSubmitClick, onCloseClick, name, valueGender, date, p
             const res = await onSubmitClick(infor);
             console.log(res);
             setShowModalSuccess(true);
-            onCloseClick();
+            // onCloseClick();
         } catch (error) {
             console.log(error);
             setShowModalError(true);
@@ -27,8 +29,16 @@ function ModalEditUser({ onSubmitClick, onCloseClick, name, valueGender, date, p
     return (
         <Modal
             title={"Cập nhật thông tin"}
-            onCloseClick={onCloseClick}
-            onSubmitClick={handleSubmit}
+            footerContent={
+                <>
+                    <button type="button" className="btn btn-danger" onClick={onCloseClick}>
+                        Đóng
+                    </button>
+                    <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                        Xác nhận
+                    </button>
+                </>
+            }
         >
             <div>
                 <label htmlfor="name" className="form-label">Họ và tên</label>
@@ -112,6 +122,19 @@ function ModalEditUser({ onSubmitClick, onCloseClick, name, valueGender, date, p
                     onChange={e => setAddress(e.target.value)}
                 />
             </div>
+            {showModalError && (
+                <ModalError onCloseClick={() => setShowModalError(false)}>
+                    {"//"}
+                </ModalError>
+            )}
+            {showModalSuccess && (
+                <ModalSuccess
+                    onCloseClick={() => {
+                        setShowModalSuccess(false)
+                        onCloseClick()
+                    }}
+                />
+            )}
         </Modal>
     );
 }

@@ -98,10 +98,10 @@ function Toast({ id, nameAuthor, title, content, date, currentRole }) {
             )}
             {showModalEditNotification && (
                 <ModalAddNotification
-                    onCloseClick={handleEditClick}
-                    onSubmitClick={handleEditSubmit}
                     title={title}
                     content={content}
+                    onCloseClick={handleEditClick}
+                    onSubmitClick={handleEditSubmit}
                 />
             )}
             {showModalDelNotification && (
@@ -109,7 +109,7 @@ function Toast({ id, nameAuthor, title, content, date, currentRole }) {
                     onCloseClick={handleDeleteClick}
                     onSubmitClick={handleDeleteSubmit}
                 >
-                    {"Bạn có chắc chắn muốn xóa thông báo này không"}
+                    {"Bạn có chắc chắn xóa thông báo này không"}
                 </ModalWarning>
             )}
         </>

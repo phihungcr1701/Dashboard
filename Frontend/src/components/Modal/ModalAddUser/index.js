@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Modal from "..";
+import ModalError from "../ModalError";
+import ModalSuccess from "../ModalSuccess";
 
 function ModalAddUser({ onSubmitClick, onCloseClick }) {
     const [name, setName] = useState("");
@@ -7,23 +9,23 @@ function ModalAddUser({ onSubmitClick, onCloseClick }) {
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("user");
     const [showModalError, setShowModalError] = useState(false);
+    const [contentModalError, setContentModalError] = useState("");
     const [showModalSuccess, setShowModalSuccess] = useState(false);
 
     const handleSubmit = async () => {
         if (!name || !email || !password) {
             setShowModalError(true);
+            setContentModalError("Hãy nhập đầy đủ thông tin!");
             return;
         }
         const user = { name, email, role, password };
         try {
             const res = await onSubmitClick(user);
             setShowModalSuccess(true);
-
-            onCloseClick();
             console.log(res);
-
         } catch (error) {
             setShowModalError(true);
+            setContentModalError("Tài khoản đã tồn tại. Vui lòng thử lại!");
             console.log(error);
         }
     }
@@ -31,8 +33,17 @@ function ModalAddUser({ onSubmitClick, onCloseClick }) {
         <>
             <Modal
                 title={"Thêm User"}
-                onCloseClick={onCloseClick}
-                onSubmitClick={handleSubmit}
+                className={showModalSuccess || showModalError ? "blurred" : ""}
+                footerContent={
+                    <>
+                        <button type="button" className="btn btn-danger" onClick={onCloseClick}>
+                            Đóng
+                        </button>
+                        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                            Xác nhận
+                        </button>
+                    </>
+                }
             >
                 <div>
                     <label for="name" className="form-label">Họ và tên <span className="text-danger">*</span></label>
@@ -107,12 +118,19 @@ function ModalAddUser({ onSubmitClick, onCloseClick }) {
                     />
                 </div>
             </Modal>
-            {/* {showModalError && (
-            
-            )} */}
-            {/* {showModalSuccess && (
-
-            )} */}
+            {showModalError && (
+                <ModalError onCloseClick={() => setShowModalError(false)}>
+                    {contentModalError}
+                </ModalError>
+            )}
+            {showModalSuccess && (
+                <ModalSuccess
+                    onCloseClick={() => {
+                        setShowModalSuccess(false)
+                        onCloseClick()
+                    }}
+                />
+            )}
         </>
     );
 }

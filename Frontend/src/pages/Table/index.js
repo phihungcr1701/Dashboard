@@ -14,14 +14,14 @@ function Table({ icon, showBreadCrumb = true }) {
 
     const typePath = useParams().type;
     let initialValueCheck = null;
-    if (typePath === "totalUsers") {
-        initialValueCheck = "Danh sách người dùng";
+    if (typePath === "monthlyVisits") {
+        initialValueCheck = "Lượt truy cập trong tháng";
     } else if (typePath === "newUsersMonth") {
         initialValueCheck = "Người dùng mới trong tháng";
     } else if (typePath === "userOffMonth") {
         initialValueCheck = "Người dùng không hoạt động";
     } else {
-        initialValueCheck = "Lượt truy cập trong tháng";
+        initialValueCheck = "Danh sách người dùng";
     }
 
     const [data, setData] = useState([]);

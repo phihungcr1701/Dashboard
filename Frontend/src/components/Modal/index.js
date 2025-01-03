@@ -1,9 +1,10 @@
-function Modal({ title, children, onSubmitClick, onCloseClick }) {
+import "./style.css"
+function Modal({ title, children, className, footerContent }) {
     return (
         <>
             <div className="modal-backdrop fade show" style={{ zIndex: 1040 }}></div>
             <div
-                className="modal fade show d-block"
+                className={`modal fade show d-block ${className || ""}`}
                 id="addToast"
                 tabIndex="-1"
                 aria-hidden="true"
@@ -13,13 +14,12 @@ function Modal({ title, children, onSubmitClick, onCloseClick }) {
                         <div className="modal-header d-flex justify-content-center">
                             <h5 className="modal-title">{title}</h5>
                         </div>
-                        <div className="modal-body d-flex flex-column gap-3 mx-2">
+                        <div className="modal-body d-flex flex-column gap-3">
                             {children}
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={onCloseClick}>Đóng</button>
-                            <button type="submit" className="btn btn-primary" onClick={onSubmitClick}>Xác nhận</button>
-                        </div>
+                        {footerContent ? (
+                            <div className="modal-footer">{footerContent}</div>
+                        ) : null}
                     </div>
                 </div>
             </div>
