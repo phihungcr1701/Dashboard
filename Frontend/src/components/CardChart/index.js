@@ -62,9 +62,9 @@ function CardChart({ content, icon, type }) {
                         name="chart"
                         onChange={e => setChartType(e.target.value)}
                     >
-                        <option value="newUser">Lượt đăng kí tài khoản</option>
-                        <option value="userAccept">Lượt truy cập lần cuối mỗi tháng</option>
-                        <option value="userNoAction">Số người không hoạt động mỗi tháng</option>
+                        <option value="newUser">Người dùng mới mỗi tháng</option>
+                        <option value="userAccept">Lượt truy cập mỗi tháng</option>
+                        <option value="userNoAction">Người dùng không hoạt động mỗi tháng</option>
                         <option value="userAge">Phân bố độ tuổi hoạt động</option>
                     </select>
                 </label>
