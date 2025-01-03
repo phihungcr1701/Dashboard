@@ -66,7 +66,7 @@ function Header() {
                     </button>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li>
-                            <Link className="dropdown-item" to={`setting/${user.id}`}>Cài đặt tài khoản</Link>
+                            <Link className="dropdown-item" to={`/setting/${user.id}`}>Cài đặt tài khoản</Link>
                         </li>
                         <li>
                             <hr className="dropdown-divider" />
