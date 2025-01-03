@@ -29,19 +29,30 @@ function Table({ icon, showBreadCrumb = true }) {
     const [isSortAsc, setSortAsc] = useState(false);
     const [activeColumn, setActiveColumn] = useState(null);
     const [valueCheck, setValueCheck] = useState(initialValueCheck);
+    const [debouncedInput, setDebouncedInput] = useState(input);
     const dispatch = useDispatch();
 
     const columnsName = ["Tên", "Email", "Quyền", "Ngày tham gia", "Hành động"];
 
     useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedInput(input);
+        }, 500);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [input]);
+
+    useEffect(() => {
         const fetchUser = async () => {
-            const result = await getAllUser(valueCheck, input, activeColumn, isSortAsc);
+            const result = await getAllUser(valueCheck, debouncedInput, activeColumn, isSortAsc);
             if (result && result.data) {
                 setData(result.data);
             }
         }
         fetchUser();
-    }, [valueCheck, input, isSortAsc, activeColumn])
+    }, [valueCheck, debouncedInput, isSortAsc, activeColumn])
 
     const handleModalAddUserSubmit = async (user) => {
         try {

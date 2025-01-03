@@ -60,9 +60,23 @@ let handleWhereClause = (type) => {
 let getInformation = async (type, inputSearch, activeColumn, isSortAsc) => {
     let sort = (isSortAsc === "true") ? true : false;
     const whereClause = inputSearch.trim() !== "" ? ({
-        name: {
-            [Op.regexp]: `${inputSearch}*`
-        }
+        [Op.or]: [
+            {
+                name: {
+                    [Op.regexp]: `${inputSearch}*`
+                }
+            },
+            {
+                "$Account.email$": {
+                    [Op.regexp]: `${inputSearch}*`
+                }
+            },
+            {
+                "$Account.role$": {
+                    [Op.regexp]: `${inputSearch}*`
+                }
+            }
+        ]
     }) : {};
 
     const orderClause = activeColumn
