@@ -30,10 +30,10 @@ function ModalExport({ onSubmitClick, onCloseClick }) {
                     </>
                 }
             >
-                <label className="label">Lựa chọn:</label>
+                <label className="label-focused">Lựa chọn:</label>
                 <select
                     defaultValue={"filter"}
-                    className="form-select p-2"
+                    className="form-select mb-2"
                     onChange={(e) => setValueSelect(e.target.value)}
                 >
                     <option value={"filter"}>Xuất các bản ghi đã lọc</option>

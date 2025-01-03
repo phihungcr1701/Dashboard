@@ -1,41 +1,24 @@
-/* Nền tiêu đề modal */
 .modal-header {
     background-color: #007bff;
-    /* Màu nền xanh dương (Bootstrap Primary) */
     color: #ffffff;
-    /* Màu chữ trắng */
     border-bottom: 1px solid #dddddd;
-    /* Viền dưới */
     padding: 15px;
-    /* Khoảng cách */
     text-align: center;
-    /* Canh giữa */
 }
 
-/* Nền khu vực content (body) */
 .modal-body {
     background-color: #f8f9fa;
-    /* Màu nền xám nhạt (Bootstrap Light) */
     color: #212529;
-    /* Màu chữ đen xám */
     padding: 20px;
-    /* Khoảng cách */
     border-radius: 0 0 5px 5px;
-    /* Bo góc dưới */
 }
 
-/* Nền khu vực button (footer) */
 .modal-footer {
     background-color: #e9ecef;
-    /* Màu nền xám nhạt (Bootstrap Secondary) */
     border-top: 1px solid #dddddd;
-    /* Viền trên */
     padding: 10px;
-    /* Khoảng cách */
     display: flex;
-    /* Flexbox để căn chỉnh */
     justify-content: flex-end;
-    /* Canh nút sang bên phải */
 }
 
 
@@ -45,15 +28,11 @@
     pointer-events: none;
 }
 
-/* Hiệu ứng làm mờ modal bên dưới */
 .modal-blur {
     filter: blur(5px);
-    /* Làm mờ */
     pointer-events: none;
-    /* Ngăn tương tác */
 }
 
-/* Overlay tối cho modal phía trên */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -61,41 +40,26 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
-    /* Overlay tối */
     z-index: 1055;
-    /* Cao hơn modal chính */
 }
 
-/* ModalSuccess nổi trên cùng */
 .modal-success,
 .modal-error {
     z-index: 1060;
-    /* Cao hơn lớp overlay */
 }
 
-/* Nền tiêu đề cho ModalError */
 .modal-error .modal-header {
     background-color: #dc3545;
-    /* Màu đỏ (Bootstrap Danger) */
     color: #ffffff;
-    /* Màu chữ trắng */
     padding: 15px;
-    /* Khoảng cách */
     border-bottom: 1px solid #bbbbbb;
-    /* Viền dưới nhạt hơn */
     text-align: center;
-    /* Canh giữa */
 }
 
 .modal-warning .modal-header {
     background-color: #ffc107;
-    /* Màu đỏ (Bootstrap Danger) */
     color: #ffffff;
-    /* Màu chữ trắng */
     padding: 15px;
-    /* Khoảng cách */
     border-bottom: 1px solid #bbbbbb;
-    /* Viền dưới nhạt hơn */
     text-align: center;
-    /* Canh giữa */
 }
