@@ -30,6 +30,7 @@ function Table({ icon, showBreadCrumb = true }) {
     const [activeColumn, setActiveColumn] = useState(null);
     const [valueCheck, setValueCheck] = useState(initialValueCheck);
     const [debouncedInput, setDebouncedInput] = useState(input);
+    const [refreshKey, setRefreshKey] = useState(0);
     const dispatch = useDispatch();
 
     const columnsName = ["Tên", "Email", "Quyền", "Ngày tham gia", "Hành động"];
@@ -52,7 +53,7 @@ function Table({ icon, showBreadCrumb = true }) {
             }
         }
         fetchUser();
-    }, [valueCheck, debouncedInput, isSortAsc, activeColumn])
+    }, [valueCheck, debouncedInput, isSortAsc, activeColumn, refreshKey])
 
     const handleModalAddUserSubmit = async (user) => {
         try {
@@ -77,6 +78,7 @@ function Table({ icon, showBreadCrumb = true }) {
     const handleModalDeleteSubmit = async (accountId) => {
         try {
             const res = await deleteAccount(accountId);
+            setRefreshKey(prevKey => prevKey + 1);
             return res.mess;
         } catch (error) {
             throw error;
