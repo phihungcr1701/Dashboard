@@ -69,7 +69,8 @@ let editInformation = async (req, res) => {
     }
 }
 let dowloadExcel = async (req, res) => {
-    const { type, inputSearch, activeColumn, isSortAsc } = req.query;
+    const { type, inputSearch = "", activeColumn, isSortAsc = false } = req.query;
+    console.log("hhhhh", type, inputSearch, activeColumn, isSortAsc);
     try {
         let result = await informationServices.getInformation(type, inputSearch, activeColumn, isSortAsc);
         const ws_data = result.map(item => ({
