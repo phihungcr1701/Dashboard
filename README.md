@@ -59,12 +59,12 @@
 
 4. **Chạy server backend**:
    ```bash
-   npm run server
+   npm run dev
    ```
 
 5. **Chạy client frontend**:
    ```bash
-   npm run client
+   npm start
    ```
 
 6. **Truy cập ứng dụng**:
